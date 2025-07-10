@@ -93,8 +93,8 @@
                 @endif
             </div>
 
-            <div class="d-flex justify-content-center gap-5">
-                <button type="submit" class="btn btn-primary " name="update">Update Book</button>
+            <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-primary " name="update">Update</button>
                 <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
             </div>
 

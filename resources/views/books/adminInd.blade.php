@@ -16,7 +16,7 @@
                      <th>Category</th>
                      <th>Photo</th>
                      <th>File</th>
-                     <th width="100px">Action</th>
+                     <th width="150px">Action</th>
                  </tr>
              </thead>
              <tbody>
@@ -36,15 +36,14 @@
                  /*ordering: false,*/
                  iDisplayLength: 10,
                  retrieve: true,
-                 ajax: "{{ route('books.adminIndex') }}",
+                 ajax: "{{ route('books.adminInd') }}",
                  columns: [
 
                      { data: "DT_RowIndex",name: 'DT_RowIndex',searchable: false,orderable: false },
                      { data: 'title', name: 'title' },
-                     { data: 'author.name', name: 'author.name', render: function(data, type, row) {
-                        return row.author ? row.author.name : '';} },
-                     { data: 'category.name', name: 'category.name', render: function(data, type, row) {
-                        return row.category ? row.category.name : '';} },
+                     { data: 'author.name', name: 'author.name' },
+                     { data: 'category.name', name: 'category.name' },
+                     { data: 'status', name: 'deleted_at', orderable: true, searchable: true },
                      { data: 'photo', name: 'photo' },
                      { data: 'file', name: 'file' },
                      { data: 'action',  name: 'action' },

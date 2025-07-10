@@ -75,8 +75,8 @@
             <small class="text-muted">Max: 20MB (PDF only)</small>
         </div>
 
-        <div class="d-flex justify-content-center g-5">
-            <input type="submit" value="Add Book" class="btn btn-primary">
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-primary " name="create">Create</button>
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
         </div>
 

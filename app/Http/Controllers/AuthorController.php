@@ -3,13 +3,38 @@
 namespace App\Http\Controllers;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class AuthorController extends Controller
 {
      public function index()
     {
-        $authors = Author::latest()->paginate(8);
-        return view('authors.index', compact('authors'));
+         $authors = Author::all();
+        if(request()->ajax())
+        {
+            return Datatables::of($authors)
+                   ->addIndexColumn()
+                   ->addColumn('action',function($row){
+                        $btn = '';
+                        $show = '';
+                        $edit = "";
+
+                        $edit = '<a href="'.route('authors.edit',[$row->id]).'" class="edit btn btn-danger btn-sm">edit</a>';
+                        $btn .= $edit;
+
+                        $show = '<a href="'.route('authors.show',[$row->id]).'" class="show btn btn-primary btn-sm">View</a>';
+                        $btn .= $show;
+
+                        return $btn;
+                   }) 
+
+                   ->rawColumns(['action'])
+
+                   ->make(true);    
+        }
+        return view('authors.index');
+
     }
 
     // 2. Show the form for creating a new author

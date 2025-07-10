@@ -1,39 +1,45 @@
 @extends('auth.home')
 
 @section('content')
-    <div class="app-content-header">
-        <div class="app-content">
-            <div class="container mt-0">
-                <button type="button" class="btn btn-sm btn-outline-success my-2" data-bs-toggle="modal"
-                    data-bs-target="#createCategoryModal">
-                    Create
-                </button>
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>Author Name</th>
-                            <th>Action</th>
-                        </tr>
-                        @foreach ($authors as $author)
-                        <tr>
-                            <td>{{ $author->name }} </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-primary update-btn"
-                                        data-bs-toggle="modal" data-bs-target="#updateauthorModal"
-                                        data-id="{{ $author->id }}" data-name="{{ $author->name }}">
-                                        Update
-                                    </button>                    
-                                    <a href="{{ $author->id }}" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Are you sure?')">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
-        </div>
-        {{ $authors->links() }}
-    </div>
+  <div class="container">
+  <h2></h2>
+  <table class="table table-bordered data-table ">
+    <thead>
+      <tr>
+        <th>Sr No</th>
+       
+        <th>Author Name</th>
+        
+        <th width="100px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+     
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+ var $j = jQuery.noConflict();
+ $j(function () {
+       
+     var table = $j('.data-table').DataTable({
+         processing: true,
+         serverSide: true,
+          /*ordering: false,*/
+          iDisplayLength: 25,
+          retrieve: true,
+         ajax: "{{ route('authors.index') }}",
+         columns: [
+
+              {data: "DT_RowIndex", name: 'DT_RowIndex',searchable: false, orderable: false},
+              {data: 'name' , name: 'name'},
+             {data: 'action', name: 'action'},
+         ],
+          responsive: true,
+     });
+       
+   });
+</script> 
 @endsection

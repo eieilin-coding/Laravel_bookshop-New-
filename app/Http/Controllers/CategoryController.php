@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -15,9 +16,32 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::latest()->paginate(8);
-        return view('categories.index', compact('categories'));
+         $categories = Category::all();
+        if(request()->ajax())
+        {
+            return Datatables::of($categories)
+                   ->addIndexColumn()
+                   ->addColumn('action',function($row){
+                        $btn = '';
+                        $show = '';
+                        $edit = "";
+
+                        $edit = '<a href="'.route('categories.edit',[$row->id]).'" class="edit btn btn-primary btn-sm">Update</a>';
+                        $btn .= $edit;
+
+                        $show = '<a href="'.route('categories.delete',[$row->id]).'" class="show btn btn-danger btn-sm">Delete</a>';
+                        $btn .= $show;
+
+                        return $btn;
+                   }) 
+
+                   ->rawColumns(['action'])
+
+                   ->make(true);    
+        }
+        return view('categories.index');       
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -60,5 +84,35 @@ class CategoryController extends Controller
         $category->delete();
 
         return $category;
+    }
+    public function test()
+    {   
+        
+        $categories = Category::all();
+        if(request()->ajax())
+        {
+            return Datatables::of($categories)
+                   ->addIndexColumn()
+                   ->addColumn('action',function($row){
+                        $btn = '';
+                        $show = '';
+                        $edit = "";
+
+                        $edit = '<a href="'.route('categories.edit',[$row->id]).'" class="edit btn btn-danger btn-sm">edit</a>';
+                        $btn .= $edit;
+
+                        $show = '<a href="'.route('categories.show',[$row->id]).'" class="show btn btn-primary btn-sm">View</a>';
+                        $btn .= $show;
+
+                        return $btn;
+                   }) 
+
+                   ->rawColumns(['action'])
+
+                   ->make(true);    
+        }
+        return view('categories.test');
+
+       
     }
 }

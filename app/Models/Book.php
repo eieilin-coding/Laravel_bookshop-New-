@@ -12,7 +12,8 @@ class Book extends Model
 
     protected $fillable = [
         'author_id', 'category_id', 'title', 'publisher', 'published_date',
-        'description', 'photo', 'file', 'temp_delete', 'download_count'
+        'description', 'photo', 'file', 'temp_delete', 'download_count',
+        'deleted_at'
     ];
     
      public function author()
