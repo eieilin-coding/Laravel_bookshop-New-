@@ -11,7 +11,7 @@
             </ol>
         </div>
     @endif
-    <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row g-3 mb-3">
             <div class="col-md-6">
@@ -76,7 +76,7 @@
         </div>
 
         <div class="d-flex justify-content-center gap-3">
-            <button type="submit" class="btn btn-primary " name="create">Create</button>
+            <button type="submit" class="btn btn-primary " name="store">Create</button>
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
         </div>
 

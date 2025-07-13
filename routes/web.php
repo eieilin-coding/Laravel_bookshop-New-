@@ -24,8 +24,7 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('adm
 
 Route::controller(BookController::class)->group(function() {
 Route::get('/', 'index')->name('index');
-Route::get('/books/index', 'index')->name('index');
-Route::get('/books/index1', 'index')->name('index');
+Route::get('/books/index', 'index')->name('books.index');
 Route::get('/books/adminIndex', 'adminIndex')->name('books.adminIndex');
 Route::get('/books/adminInd', 'adminInd')->name('books.adminInd');
 Route::get('/books/show/{id}', 'show')->name('books.show');
@@ -78,3 +77,6 @@ Route::post('/books/{id}/restore', [BookController::class, 'restore'])->name('bo
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get('/books/{id}/download', [BookController::class, 'download'])->name('books.download');
+    // ->middleware('auth'); // Optional auth protection

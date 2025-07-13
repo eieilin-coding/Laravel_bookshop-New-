@@ -1,22 +1,50 @@
-@extends("layouts.app")
- @section("content" )
+@extends("layouts.userview")
 
+@section('content')
 
-<div class="card" style="width: 18rem;">
-  <img src="{{ asset('storage/photos/' . $book->photo) }}" class="card-img-top" alt="Image Photo">
-  <div class="card-body">
-    <h5 class="card-title">{{ $book->title }}</h5>
-    <p class="card-text">{{ $book->description }}</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{ $book->title }}</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
+<div class="book-container" style="padding-top: 80px;">
+    <!-- Book Cover -->
+    <div class="book-cover">
+        <img src="{{ asset($book->photo ? 'storage/photos/'.$book->photo : 'images/default-book-cover.jpg') }}" alt="{{ $book->title }}">
+    </div>
+
+    <!-- Book Details -->
+    <div class="book-details">
+        <h1>{{ $book->title }}</h1>
+
+        <div class="book-meta">
+            <p><strong>Author:</strong> {{ $book->author->name }}</p>
+            <p><strong>Category:</strong> {{ $book->category->name }}</p>
+            <p><strong>Published Date:</strong> {{ \Carbon\Carbon::parse($book->published_date)->format('F d, Y') }}</p>
+        </div>
+
+        <hr>
+
+        <div class="book-description">
+            <h2>Description:</h2>
+            <p>{{ $book->description }}</p>
+        </div>
+
+        <div class="book-actions">
+            <a href="{{ route('books.download', $book->id) }}" class="btn btn-download" download="{{ str_replace(' ', '_', $book->title) }}.pdf">
+                <i class="fas fa-download"></i> Download PDF
+            </a>
+            <a href="{{ route('books.index') }}" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Back to Books
+            </a>
+        </div>
+
+        <div class="download-count">
+            <p><strong>Downloads:</strong> {{ number_format($book->download_count) }}</p>
+        </div>
+    </div>
 </div>
+@push('styles')
+<style>
+    body .footer {
+        padding-block: 1rem !important; /* or 0 if you want to remove it completely */
+    }
+</style>
+@endpush
 
 @endsection

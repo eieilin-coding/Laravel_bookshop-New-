@@ -7,30 +7,39 @@ use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
+
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BookController extends Controller
 {
     public function index()
     {
 
-    //     // Latest books (sorted by newest first)
-    // $latestBooks = Book::latest()->take(4)->get(); // Adjust `take(4)` as needed
+        //     // Latest books (sorted by newest first)
+        // $latestBooks = Book::latest()->take(4)->get(); // Adjust `take(4)` as needed
 
-    // // Discounted books (where discount > 0)
-    // $discountedBooks = Book::where('discount', '>', 0)->get();
+        // // Discounted books (where discount > 0)
+        // $discountedBooks = Book::where('discount', '>', 0)->get();
 
-    // // Featured books (optional, if needed)
-    // $featuredBooks = Book::where('is_featured', true)->get(); // Requires a `is_featured` column
+        // // Featured books (optional, if needed)
+        // $featuredBooks = Book::where('is_featured', true)->get(); // Requires a `is_featured` column
 
-    // return view('books.index1', [
-    //     'latestBooks' => $latestBooks,
-    //     'discountedBooks' => $discountedBooks,
-    //     'featuredBooks' => $featuredBooks, // Optional
-    // ]);
+        // return view('books.index1', [
+        //     'latestBooks' => $latestBooks,
+        //     'discountedBooks' => $discountedBooks,
+        //     'featuredBooks' => $featuredBooks, // Optional
+        // ]);
 
-        $data = Book::all();
-        return view('books.index1', ['books' => $data]);
-        
+        $data = Book::get();
+
+        $latestBooks = Book::latest()->get();
+
+        return view('books.index', [
+            'books' => $data,
+            'latestBooks' => $latestBooks,
+        ]);
+
 
         // // Get only active (non-archived) books
         // $activeBooks = Book::all();
@@ -152,25 +161,25 @@ class BookController extends Controller
         return view('books.edit', ['book' => $book, 'categories' => $categories, 'authors' => $authors]);
     }
 
-    // Hide a book (set temp_delete = 1)
-    public function hide_book($id)
-    {
-        $book = Book::findOrFail($id);
-        $book->temp_delete = 1;
-        $book->save();
+    // // Hide a book (set temp_delete = 1)
+    // public function hide_book($id)
+    // {
+    //     $book = Book::findOrFail($id);
+    //     $book->temp_delete = 1;
+    //     $book->save();
 
-        return redirect()->back()->with('success', 'Book hidden successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Book hidden successfully.');
+    // }
 
-    // Show a hidden book (set temp_delete = 0)
-    public function show_book($id)
-    {
-        $book = Book::findOrFail($id);
-        $book->temp_delete = 0;
-        $book->save();
+    // // Show a hidden book (set temp_delete = 0)
+    // public function show_book($id)
+    // {
+    //     $book = Book::findOrFail($id);
+    //     $book->temp_delete = 0;
+    //     $book->save();
 
-        return redirect()->back()->with('success', 'Book is now visible.');
-    }
+    //     return redirect()->back()->with('success', 'Book is now visible.');
+    // }
 
     public function store()
     {
@@ -268,5 +277,22 @@ class BookController extends Controller
         $book->save();
 
         return redirect('/books/adminIndex')->with('success', 'Book updated successfully.');
+    }
+    public function download($id)
+    {
+        $book = Book::findOrFail($id);
+
+        // Update download count
+        $book->increment('download_count');
+
+        // Assume the 'file' column stores the relative path like 'books/mybook.pdf'
+        $filePath = storage_path('app/public/files/' . $book->file); // If stored in storage/app/public
+
+        if (!file_exists($filePath)) {
+            return abort(404, 'File not found.');
+        }
+
+        // Return file download response
+        return response()->download($filePath, basename($filePath));
     }
 }
