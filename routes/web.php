@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::controller(LoginRegisterController::class)->group(function() {
@@ -17,12 +18,16 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/logout', 'logout')->name('logout');
 });
 
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
 
 
 Route::controller(BookController::class)->group(function() {
 Route::get('/', 'index')->name('index');
 Route::get('/books/index', 'index')->name('index');
+Route::get('/books/index1', 'index')->name('index');
 Route::get('/books/adminIndex', 'adminIndex')->name('books.adminIndex');
+Route::get('/books/adminInd', 'adminInd')->name('books.adminInd');
 Route::get('/books/show/{id}', 'show')->name('books.show');
 
 Route::get('/books/create', 'create')->name('books.create');
@@ -45,18 +50,31 @@ Route::get('/books/delete/{id}', 'delete')->name('books.delete');
 // Route::get('/books/show/{id}', [BookController::class, 'show']);
 
 
-Route::get('/categories/index', [CategoryController::class,'index'])->name('categories.index');
-
 Route::get('/authors/index', [AuthorController::class,'index'])->name('authors.index');
 Route::get('authors/edit/{id}', [AuthorController::class,'edit'])->name('authors.edit');
-Route::get('authors/show/{id}', [AuthorController::class,'show'])->name('authors.show');
+Route::get('authors/delete/{id}', [AuthorController::class,'delete'])->name('authors.delete');
 
 Route::get('/users/index', [UserController::class,'index'])->name('users.index');
-Route::get('users/ban/{id}', [UserController::class, 'ban'])->name('users.ban');
-Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('users/suspended/{id}', [UserController::class, 'suspended'])->name('users.suspended');
+Route::get('users/unsuspended/{id}', [UserController::class, 'unsuspended'])->name('users.unsuspended');
+Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 
+
+Route::get('/categories/index', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/test', [CategoryController::class, 'index'])->name('categories.test');
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
 Route::get('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
-Route::get('/categories/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
+Route::post('/categories/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
+Route::get('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
+
 
 Route::post('/books/{id}/archive', [BookController::class, 'archive'])->name('books.archive');
 Route::post('/books/{id}/restore', [BookController::class, 'restore'])->name('books.restore');
+
+// Route::get('books/index1' , function() {
+//     return view('books.index1');});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });

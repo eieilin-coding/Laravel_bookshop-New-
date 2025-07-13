@@ -154,9 +154,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -222,7 +222,7 @@ return [
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 300,
+    'sidebar_nav_animation_speed' => 100,
 
     /*
     |--------------------------------------------------------------------------
@@ -300,11 +300,11 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type' => 'navbar-search',
+        //     'text' => 'search',
+        //     'topnav_right' => true,
+        // ],
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,

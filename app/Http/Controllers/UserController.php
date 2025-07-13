@@ -17,15 +17,21 @@ class UserController extends Controller
                    ->addIndexColumn()
                    ->addColumn('action',function($row){
                         $btn = '';
-                        $show = '';
-                        $edit = "";
+                        $del = '';
+                        
                         $ban = "";
 
-                        $show = '<a href="'.route('users.show',[$row->id]).'" class="show btn btn-primary btn-sm">View</a>';
-                        $btn .= $show;
-
-                        $ban = '<a href="'.route('users.ban',[$row->id]).'" class="ban btn btn-warning btn-sm">Ban</a>';
+                        if($row->suspensed == 1){
+                        $ban = '<a href="'.route('users.unsuspended',[$row->id]).'" class="ban btn btn-outline-warning btn-md">Ban</a>';
                         $btn .= $ban;
+                        }
+                        else {
+                        $ban = '<a href="'.route('users.suspended',[$row->id]).'" class="ban btn btn-warning btn-md"><i class="fa-solid fa-ban"></i></a>';
+                        $btn .= $ban;
+                        }
+
+                        $del = '<a href="'.route('users.delete',[$row->id]).'" class="delete btn btn-danger btn-md"><i class="fa-solid fa-trash"></i></a>';
+                        $btn .= $del;
 
                         return $btn;
                    }) 

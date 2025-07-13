@@ -12,8 +12,25 @@ class BookController extends Controller
 {
     public function index()
     {
-        $data = Book::latest()->paginate(8);
-        return view('books.index', ['books' => $data]);
+
+    //     // Latest books (sorted by newest first)
+    // $latestBooks = Book::latest()->take(4)->get(); // Adjust `take(4)` as needed
+
+    // // Discounted books (where discount > 0)
+    // $discountedBooks = Book::where('discount', '>', 0)->get();
+
+    // // Featured books (optional, if needed)
+    // $featuredBooks = Book::where('is_featured', true)->get(); // Requires a `is_featured` column
+
+    // return view('books.index1', [
+    //     'latestBooks' => $latestBooks,
+    //     'discountedBooks' => $discountedBooks,
+    //     'featuredBooks' => $featuredBooks, // Optional
+    // ]);
+
+        $data = Book::all();
+        return view('books.index1', ['books' => $data]);
+        
 
         // // Get only active (non-archived) books
         // $activeBooks = Book::all();
@@ -27,10 +44,15 @@ class BookController extends Controller
 
     public function adminInd()
     {
-        $books = Book::with(['author', 'category'])->withTrashed()->latest();
+        $books = (Book::with(['author', 'category'])->withTrashed());
         if (request()->ajax()) {
-            return Datatables::of($books)
+            return DataTables::of($books)
                 ->addIndexColumn()
+                ->addColumn('status', function ($row) {
+                    return $row->trashed() ?
+                        '<span class="badge badge-danger">Archived</span>' :
+                        '<span class="badge badge-success">Active</span>';
+                })
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     if ($row->trashed()) {
@@ -39,12 +61,9 @@ class BookController extends Controller
                         $btn .= '<a href="' . route('books.edit', $row->id) . '" class="btn btn-sm btn-primary">Edit</a> ';
                         $btn .= '<a href="' . route('books.archive', $row->id) . '" class="btn btn-sm btn-warning">Archive</a> ';
                     }
-
                     return $btn;
                 })
-
                 ->rawColumns(['status', 'action'])
-
                 ->make(true);
         }
         return view('books.adminInd');
@@ -52,13 +71,25 @@ class BookController extends Controller
 
     public function archive($id)
     {
-        Book::findOrFail($id)->delete();
+        $book = Book::findOrFail($id);
+        $book->delete();
+
+        if (request()->ajax()) {
+            return response()->json(['message' => 'Book archived successfully']);
+        }
+
         return redirect()->back()->with('success', 'Book archived successfully');
     }
 
     public function restore($id)
     {
-        Book::withTrashed()->findOrFail($id)->restore();
+        $book = Book::withTrashed()->findOrFail($id);
+        $book->restore();
+
+        if (request()->ajax()) {
+            return response()->json(['message' => 'Book restored successfully']);
+        }
+
         return redirect()->back()->with('success', 'Book restored successfully');
     }
 
@@ -74,13 +105,16 @@ class BookController extends Controller
                     $edit = "";
                     $delete = "";
 
-                    $edit = '<a href="' . route('books.edit', [$row->id]) . '" class="edit btn btn-primary btn-md"><i class="fa-solid fa-pen-to-square"></i></a>';
+                    $edit = '<a href="' . route('books.edit', [$row->id]) . '" class="edit btn btn-primary btn-md">
+                    <i class="fa-solid fa-pen-to-square"></i></a>';
                     $btn .= $edit;
 
-                    $show = '<a href="' . route('books.show', [$row->id]) . '" class="show btn btn-info btn-md"><i class="fa-solid fa-eye"></i></a>';
+                    $show = '<a href="' . route('books.show', [$row->id]) . '" class="show btn btn-info btn-md">
+                    <i class="fa-solid fa-eye"></i></a>';
                     $btn .= $show;
 
-                    $delete = '<a href="' . route('books.delete', [$row->id]) . '" class="delete btn btn-danger btn-md"><i class="fa-solid fa-trash"></i></a>';
+                    $delete = '<a href="' . route('books.delete', [$row->id]) . '" class="delete btn btn-danger btn-md">
+                    <i class="fa-solid fa-trash"></i></a>';
                     $btn .= $delete;
 
                     return $btn;

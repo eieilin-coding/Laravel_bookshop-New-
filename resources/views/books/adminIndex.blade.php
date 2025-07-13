@@ -1,10 +1,8 @@
- @extends('auth.home')
+ @extends('layouts.adminlte')
 
  @section('content') 
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" rel="stylesheet"></script>                
-     <div class="container">
-         <h2></h2>
+                 
+     <div class="container bg-light my-3">
          <a href="{{ url('/books/create') }}" class="btn btn-sm btn-outline-success my-2">Create</a>
 
          <table class="table table-bordered data-table ">
@@ -16,7 +14,7 @@
                      <th>Category</th>
                      <th>Photo</th>
                      <th>File</th>
-                     <th width="100px">Action</th>
+                     <th width="130px">Action</th>
                  </tr>
              </thead>
              <tbody>

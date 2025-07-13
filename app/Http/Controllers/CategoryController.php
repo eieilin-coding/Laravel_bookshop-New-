@@ -1,118 +1,67 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
-     //list=>index
-    //  public function index()
-    // {
-    //     $data = Category::latest()->paginate(8);
-    //     return view('categories.index', ['categories' => $data]);      
-    // }
 
     public function index()
     {
-         $categories = Category::all();
-        if(request()->ajax())
-        {
+        $categories = Category::all();
+        if (request()->ajax()) {
             return Datatables::of($categories)
-                   ->addIndexColumn()
-                   ->addColumn('action',function($row){
-                        $btn = '';
-                        $show = '';
-                        $edit = "";
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                    $delete = '';
+                    $edit = "";
 
-                        $edit = '<a href="'.route('categories.edit',[$row->id]).'" class="edit btn btn-primary btn-sm">Update</a>';
-                        $btn .= $edit;
+                    $edit = '<button type="button" data-id="'.$row->id.'" class="editCategory btn btn-primary btn-md">
+                        <i class="fa fa-edit"></i></button>';
+                    $btn .= $edit;
 
-                        $show = '<a href="'.route('categories.delete',[$row->id]).'" class="show btn btn-danger btn-sm">Delete</a>';
-                        $btn .= $show;
+                    $delete = '<button type="button" data-id="'.$row->id.'" class="deleteCategory btn btn-danger btn-md">
+                    <i class="fa fa-trash"></i></button>';
+                    $btn .= $delete;
 
-                        return $btn;
-                   }) 
+                    return $btn;
+                })
 
-                   ->rawColumns(['action'])
+                ->rawColumns(['action'])
 
-                   ->make(true);    
+                ->make(true);
         }
-        return view('categories.index');       
+        return view('categories.index');
     }
-    
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $category = new Category;
-        $category->name = request()->name;
-        $category->save();
-
-        return $category;
+        $request->validate(['name' => 'required|string|max:255']);
+        Category::create(['name' => $request->name]);
+        return response()->json(['success' => true, 'message' => 'Category created successfully']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        return Category::find($id);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update($id)
+    public function edit($id)
     {
         $category = Category::find($id);
-        $category->name = request()->name;
-        $category->save();
-
-        return $category;
+        return response()->json($category);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function update(Request $request, $id)
+    {
+        $request->validate(['name' => 'required|string|max:255']);
+        $category = Category::find($id);
+        $category->update(['name' => $request->name]);
+        return response()->json(['success' => true, 'message' => 'Category updated successfully']);
+    }
+
     public function destroy($id)
     {
-        $category = Category::find($id);
-        $category->delete();
-
-        return $category;
-    }
-    public function test()
-    {   
-        
-        $categories = Category::all();
-        if(request()->ajax())
-        {
-            return Datatables::of($categories)
-                   ->addIndexColumn()
-                   ->addColumn('action',function($row){
-                        $btn = '';
-                        $show = '';
-                        $edit = "";
-
-                        $edit = '<a href="'.route('categories.edit',[$row->id]).'" class="edit btn btn-danger btn-sm">edit</a>';
-                        $btn .= $edit;
-
-                        $show = '<a href="'.route('categories.show',[$row->id]).'" class="show btn btn-primary btn-sm">View</a>';
-                        $btn .= $show;
-
-                        return $btn;
-                   }) 
-
-                   ->rawColumns(['action'])
-
-                   ->make(true);    
-        }
-        return view('categories.test');
-
-       
+        Category::find($id)->delete();
+        return response()->json(['success' => true, 'message' => 'Category deleted']);
     }
 }

@@ -2,8 +2,7 @@
 
 @section('content')
  
-<div class="container">
-  <h2></h2>
+<div class="container bg-light my-3">
   <table class="table table-bordered data-table ">
     <thead>
       <tr>

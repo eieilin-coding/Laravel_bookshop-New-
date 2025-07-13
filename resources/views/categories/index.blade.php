@@ -1,9 +1,8 @@
-@extends('auth.home')
+@extends('layouts.adminlte')
 
 @section('content')
-
-<div class="container">
-  <h2></h2>
+<div class="container bg-light my-3">
+  <a href="{{ url('/categories/create') }}" class="btn btn-sm btn-success my-2">Create</a>
   <table class="table table-bordered data-table ">
     <thead>
       <tr>
@@ -14,9 +13,7 @@
         <th width="100px">Action</th>
       </tr>
     </thead>
-    <tbody>
-      
-     
+    <tbody>  
     </tbody>
   </table>
 </div>
@@ -29,7 +26,7 @@
          processing: true,
          serverSide: true,
           /*ordering: false,*/
-          iDisplayLength: 25,
+          iDisplayLength: 10,
           retrieve: true,
          ajax: "{{ route('categories.index') }}",
          columns: [

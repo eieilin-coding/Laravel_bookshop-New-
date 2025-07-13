@@ -17,14 +17,14 @@ class AuthorController extends Controller
                    ->addIndexColumn()
                    ->addColumn('action',function($row){
                         $btn = '';
-                        $show = '';
+                        $del = '';
                         $edit = "";
 
-                        $edit = '<a href="'.route('authors.edit',[$row->id]).'" class="edit btn btn-danger btn-sm">edit</a>';
+                        $edit = '<a href="'.route('authors.edit',[$row->id]).'" class="edit btn btn-primary btn-md"><i class="fa-solid fa-pen-to-square"></i></a>';
                         $btn .= $edit;
 
-                        $show = '<a href="'.route('authors.show',[$row->id]).'" class="show btn btn-primary btn-sm">View</a>';
-                        $btn .= $show;
+                        $del = '<a href="'.route('authors.delete',[$row->id]).'" class="del btn btn-danger btn-md"><i class="fa-solid fa-trash"></i></a>';
+                        $btn .= $del;
 
                         return $btn;
                    }) 

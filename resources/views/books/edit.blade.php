@@ -1,7 +1,7 @@
-@extends('auth.home')
+@extends('layouts.adminlte')
 
 @section('content')
-    <div class="container">
+    <div class="container bg-light">
         @if ($errors->any())
             <div class="alert alert-warning">
                 <ol>
