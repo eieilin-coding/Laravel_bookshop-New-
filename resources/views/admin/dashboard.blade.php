@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container py-4">
-    <h1 class="mb-4">Books Dashboard</h1>
+    <h1 class="mb-4">Dashboard Overview</h1>
     
     <div class="row">
         <!-- Top Books Bar Chart -->

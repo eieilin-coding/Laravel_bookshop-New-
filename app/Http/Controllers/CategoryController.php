@@ -20,12 +20,17 @@ class CategoryController extends Controller
                     $delete = '';
                     $edit = "";
 
-                    $edit = '<button type="button" data-id="'.$row->id.'" class="editCategory btn btn-primary btn-md">
-                        <i class="fa fa-edit"></i></button>';
+                    // $edit = '<button type="button"  data-bs-toggle="modal" data-bs-target="#updateCategoryModal" data-id="' . $row->id . '" data-name="' . $row->name . '" class="editCategory btn btn-primary btn-md">
+                    //     <i class="fa fa-edit"></i></button>';
+
+                    $edit = '<button type="button" class="editCategory btn btn-primary btn-md"  data-bs-toggle="modal" 
+                            data-bs-target="#updateCategoryModal"  data-id="' . $row->id . '"   data-name="' . htmlspecialchars($row->name, ENT_QUOTES) . '">
+                            <i class="fa fa-edit"></i> </button>';
                     $btn .= $edit;
 
-                    $delete = '<button type="button" data-id="'.$row->id.'" class="deleteCategory btn btn-danger btn-md">
-                    <i class="fa fa-trash"></i></button>';
+
+                    $delete = '<a href="' . route('categories.delete', [$row->id]) . '" class="delete btn btn-danger btn-md">
+                    <i class="fa-solid fa-trash"></i></a>';
                     $btn .= $delete;
 
                     return $btn;
@@ -38,30 +43,43 @@ class CategoryController extends Controller
         return view('categories.index');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $request->validate(['name' => 'required|string|max:255']);
-        Category::create(['name' => $request->name]);
-        return response()->json(['success' => true, 'message' => 'Category created successfully']);
+        $validator = validator(request()->all(), [
+            'name' => 'required|string|max:255|unique:categories,name',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+        $category = new Category;
+        $category->name = request()->name;
+        $category->save();
+
+        return redirect()->route('categories.index');
     }
 
-    public function edit($id)
+    public function update($id)
+    {
+        $validator = validator(request()->all(), [
+            'name' => 'required|string|max:255|unique:categories,name',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+        $category = Category::find($id);
+        $category->name = request()->name;
+        $category->save();
+
+        return redirect()->route('categories.index');
+    }
+
+    public function delete($id)
+
     {
         $category = Category::find($id);
-        return response()->json($category);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate(['name' => 'required|string|max:255']);
-        $category = Category::find($id);
-        $category->update(['name' => $request->name]);
-        return response()->json(['success' => true, 'message' => 'Category updated successfully']);
-    }
-
-    public function destroy($id)
-    {
-        Category::find($id)->delete();
-        return response()->json(['success' => true, 'message' => 'Category deleted']);
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }

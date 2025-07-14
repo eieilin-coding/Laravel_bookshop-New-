@@ -1,7 +1,7 @@
 @extends('layouts.adminlte')
 
 @section('content')
-    <div class="container bg-light">
+    <div class="container bg-light py-3">
         @if ($errors->any())
             <div class="alert alert-warning">
                 <ol>

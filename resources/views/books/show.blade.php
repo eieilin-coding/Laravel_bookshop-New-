@@ -42,7 +42,7 @@
 @push('styles')
 <style>
     body .footer {
-        padding-block: 1rem !important; /* or 0 if you want to remove it completely */
+        padding-block: 2rem !important; /* or 0 if you want to remove it completely */
     }
 </style>
 @endpush

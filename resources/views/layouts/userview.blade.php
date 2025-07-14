@@ -82,7 +82,10 @@
                 <i class="ri-search-line search-button" id="search-button"></i>
 
                 <!-- Login button -->
-                <i class="ri-user-line login-button" id="login-button"></i>
+                <i class="ri-login-circle-line login-button" id="login-button"></i>
+
+                <!-- Register button -->
+                <i class="ri-user-line register-button" id="register-button"></i>
 
                 <!-- Theme button -->
                 <i class="ri-moon-line change-theme" id="theme-button"></i>

@@ -62,7 +62,7 @@ class LoginRegisterController extends Controller implements HasMiddleware
         if(Auth::attempt($credentials))
         {
             $request->session()->regenerate();
-            return redirect()->intended('home');
+            return redirect()->intended('admin/dashboard');
         }
 
         return back()->withErrors([
@@ -81,7 +81,7 @@ class LoginRegisterController extends Controller implements HasMiddleware
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')
+        return redirect()->route('books.index')
             ->withSuccess('You have logged out successfully!');
     }
 }

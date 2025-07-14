@@ -37,6 +37,25 @@ if(loginClose){
     })
 }
 
+/*=============== Register ===============*/
+const registerButton = document.getElementById('register-button'),
+      registerClose = document.getElementById('register-close'),
+      registerContent = document.getElementById('register-content')
+
+/* register show */
+if(registerButton){
+    registerButton.addEventListener('click', () =>{
+        registerContent.classList.add('show-register')
+    })
+}
+
+/* register hidden */
+if(registerClose){
+    registerClose.addEventListener('click', () =>{
+        registerContent.classList.remove('show-register')
+    })
+}
+
 
 /*=============== ADD SHADOW HEADER ===============*/
 const shadowHeader = () =>{

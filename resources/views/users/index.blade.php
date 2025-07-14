@@ -1,4 +1,4 @@
-@extends('auth.home')
+@extends('layouts.adminlte')
 
 @section('content')
  
