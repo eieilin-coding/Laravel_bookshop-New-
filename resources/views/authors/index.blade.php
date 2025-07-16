@@ -26,8 +26,7 @@
     </div>
 
     <!-- Create Author Modal -->
-    <div class="modal" id="createAuthorModal" tabindex="-1" aria-labelledby="createAuthorModalLabel"
-        aria-hidden="true">
+    <div class="modal" id="createAuthorModal" tabindex="-1" aria-labelledby="createAuthorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,8 +52,7 @@
     </div>
 
     <!-- Update Author Modal -->
-    <div class="modal " id="updateAuthorModal" tabindex="-1" aria-labelledby="updateAuthorModalLabel"
-        aria-hidden="true">
+    <div class="modal " id="updateAuthorModal" tabindex="-1" aria-labelledby="updateAuthorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,6 +77,16 @@
         </div>
     </div>
 
+    <script>
+        $(document).on('click', '.editAuthor', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+
+            $('#updateAuthorId').val(id);
+            $('#updateAuthorName').val(name);
+            $('#updateAuthorForm').attr('action', `/authors/update/${id}`);
+        });
+    </script>
 
     <script type="text/javascript">
         var $j = jQuery.noConflict();
@@ -112,6 +120,8 @@
             });
 
         });
+
     </script>
+
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 @endsection

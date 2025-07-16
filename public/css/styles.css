@@ -192,6 +192,11 @@ body.dark-theme {
   align-items: center;
 }
 
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 .nav__logo {
   display: flex;
   align-items: center;
@@ -398,10 +403,18 @@ body.dark-theme {
   cursor: pointer;
 }
 
-.login__close, .register__close {
+.login__close {
   position: absolute;
   top: 2rem;
   right: 2rem;
+  font-size: 2rem;
+  color: var(--title-color);
+  cursor: pointer;
+}
+.register__close {
+  position: absolute;
+  top: 2rem;
+  right: 10rem;
   font-size: 2rem;
   color: var(--title-color);
   cursor: pointer;
@@ -634,7 +647,7 @@ body.dark-theme {
 }
 
 .new__img {
-  width: 100px;
+  width: 150px;
   height: 200px;
 }
 

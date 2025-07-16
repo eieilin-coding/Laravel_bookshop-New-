@@ -78,29 +78,16 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editButtons = document.querySelectorAll('.editCategory');
-            const updateForm = document.getElementById('updateCategoryForm');
-            const idInput = document.getElementById('updateCategoryId');
-            const nameInput = document.getElementById('updateCategoryName');
+        $(document).on('click', '.editCategory', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
 
-            editButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    const name = this.getAttribute('data-name');
-
-                    // Fill the form fields
-                    idInput.value = id;
-                    nameInput.value = name;
-
-                    // Dynamically set the action URL with the category ID
-                    updateForm.action = `/categories/update/${id}`;
-                    // If your app uses subdirectories (e.g., /myapp/public), do this instead:
-                    // updateForm.action = `{{ url('/categories/update') }}/${id}`;
-                });
-            });
+            $('#updateCategoryId').val(id);
+            $('#updateCategoryName').val(name);
+            $('#updateCategoryForm').attr('action', `/categories/update/${id}`);
         });
     </script>
+
 
     </script>
     <script type="text/javascript">

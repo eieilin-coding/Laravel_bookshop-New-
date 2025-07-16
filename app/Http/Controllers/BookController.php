@@ -161,25 +161,6 @@ class BookController extends Controller
         return view('books.edit', ['book' => $book, 'categories' => $categories, 'authors' => $authors]);
     }
 
-    // // Hide a book (set temp_delete = 1)
-    // public function hide_book($id)
-    // {
-    //     $book = Book::findOrFail($id);
-    //     $book->temp_delete = 1;
-    //     $book->save();
-
-    //     return redirect()->back()->with('success', 'Book hidden successfully.');
-    // }
-
-    // // Show a hidden book (set temp_delete = 0)
-    // public function show_book($id)
-    // {
-    //     $book = Book::findOrFail($id);
-    //     $book->temp_delete = 0;
-    //     $book->save();
-
-    //     return redirect()->back()->with('success', 'Book is now visible.');
-    // }
 
     public function store()
     {

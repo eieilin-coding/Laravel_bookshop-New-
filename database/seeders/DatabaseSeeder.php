@@ -15,15 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         Book::factory()->count(25)->create();
-         User::factory()->count(15)->create();
-         Author::factory()->count(10)->create();
+        //  Book::factory()->count(25)->create();
+        //  User::factory()->count(15)->create();
+        //  Author::factory()->count(10)->create();
 
-        $list = ['Romance', 'Novel', 'Funny', 'Newspaper', 'Magazines'];
-        foreach ($list as $name) {
-            \App\Models\Category::create(['name' => $name]);
+        // $list = ['Romance', 'Novel', 'Funny', 'Newspaper', 'Magazines'];
+        // foreach ($list as $name) {
+        //     \App\Models\Category::create(['name' => $name]);
+        // }
+
+        $role = ['Admin', 'User'];
+        foreach ($role as $name){
+            \App\Models\Role::create(['name' => $name]);
         }
-
+        
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

@@ -30,6 +30,7 @@
     <header class="header" id="header">
         <nav class="nav container">
             <a href="#" class="nav__logo">
+                {{-- <img src="{{ asset('storage/photos/logo1.png') }}" alt="image" class="logo"> --}}
                 <i class="ri-book-3-line"></i>E-Book
             </a>
             <div class="nav__menu">
@@ -76,15 +77,33 @@
                 <!-- Search button -->
                 <i class="ri-search-line search-button" id="search-button"></i>
 
-                <!-- Login button -->
-                <i class="ri-login-circle-line login-button" id="login-button"></i>
+                @auth
+                    <!-- If the user is an admin -->
+                    @if (auth()->user()->role_id == 1)
+                        <a href="{{ route('admin.dashboard') }}" title="Admin Dashboard">
+                            <i class="ri-dashboard-line"></i>
+                        </a>
+                    @endif
 
-                <!-- Register button -->
-                <i class="ri-user-line register-button" id="register-button"></i>
+                    <!-- Logout button -->
+                    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit" style="background: none; border: none; cursor: pointer;">
+                            <i class="ri-logout-box-r-line" title="Logout"></i>
+                        </button>
+                    </form>
+                @else
+                    <!-- Login button -->
+                    <i class="ri-login-circle-line login-button" id="login-button"></i>
+
+                    <!-- Register button -->
+                    <i class="ri-user-line register-button" id="register-button"></i>
+                @endauth
 
                 <!-- Theme button -->
                 <i class="ri-moon-line change-theme" id="theme-button"></i>
             </div>
+
         </nav>
     </header>
 
@@ -169,9 +188,9 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="register-pass"
-                        class="register__label @error('password') is-invalid @enderror">Confirm Password</label>
-                    <input type="password" placeholder="Enter your password" id="register-pass"
+                    <label for="register-pass" class="register__label @error('password') is-invalid @enderror">Confirm
+                        Password</label>
+                    <input type="password" placeholder="Enter confirm password" id="register-pass"
                         class="register__input" id="password_confirmation" name="password_confirmation">
                     @error('password')
                         <span class="text-danger">{{ $message }}</span>

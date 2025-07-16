@@ -119,7 +119,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/logo.png',
+            'path' => 'vendor/adminlte/dist/img/logo1.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -263,7 +263,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'books/index',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',

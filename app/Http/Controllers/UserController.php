@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
-         $users =User::all();
+        //  $users =User::all();
+        $users = User::where('role_id', 2)->get();
         if(request()->ajax())
         {
             return Datatables::of($users)

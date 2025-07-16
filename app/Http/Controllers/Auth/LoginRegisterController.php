@@ -11,6 +11,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
+
+
 class LoginRegisterController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
@@ -37,19 +39,25 @@ class LoginRegisterController extends Controller implements HasMiddleware
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => $request->password,
+            'role_id' => 2,
         ]);
 
         Auth::login($user);
         //To authenticate ?
         $request->session()->regenerate();
-        return redirect()->route('home')
-            ->withSuccess('You have successfully registered & logged in!');
+
+       return redirect()->route('books.index')->withSuccess('Registration successful!');
     }
 
     public function login(): View
     {
         return view('auth.login');
+    }
+
+    public function loginRegister(): View
+    {
+        return view('auth.loginRegister');
     }
 
     public function authenticate(Request $request): RedirectResponse
@@ -61,8 +69,14 @@ class LoginRegisterController extends Controller implements HasMiddleware
 
         if(Auth::attempt($credentials))
         {
-            $request->session()->regenerate();
-            return redirect()->intended('admin/dashboard');
+            $request->session()->regenerate();           
+            $user = Auth::user();
+
+        if ($user->role_id == 1) {        
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->route('books.index');
         }
 
         return back()->withErrors([
@@ -71,10 +85,10 @@ class LoginRegisterController extends Controller implements HasMiddleware
 
     }
     
-    public function home(): View
-    {
-        return view('auth.home');
-    } 
+    // public function home(): View
+    // {
+    //     return view('auth.home');
+    // } 
     
     public function logout(Request $request): RedirectResponse
     {

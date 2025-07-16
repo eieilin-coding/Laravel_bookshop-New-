@@ -23,9 +23,11 @@ class CategoryController extends Controller
                     // $edit = '<button type="button"  data-bs-toggle="modal" data-bs-target="#updateCategoryModal" data-id="' . $row->id . '" data-name="' . $row->name . '" class="editCategory btn btn-primary btn-md">
                     //     <i class="fa fa-edit"></i></button>';
 
-                    $edit = '<button type="button" class="editCategory btn btn-primary btn-md"  data-bs-toggle="modal" 
-                            data-bs-target="#updateCategoryModal"  data-id="' . $row->id . '"   data-name="' . htmlspecialchars($row->name, ENT_QUOTES) . '">
+                    $edit = '<button type="button" class="editCategory btn btn-primary btn-md" data-id="' . $row->id . '" 
+                            data-name="' . htmlspecialchars($row->name, ENT_QUOTES, 'UTF-8') . '" 
+                            data-bs-toggle="modal" data-bs-target="#updateCategoryModal">
                             <i class="fa fa-edit"></i> </button>';
+
                     $btn .= $edit;
 
 

@@ -24,7 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'deleted_at'
+        'deleted_at',
+        'role_id',
 
     ];
 
@@ -50,4 +51,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public function isAdmin(): bool
+    {
+        return $this->role_id === 1; // Assuming 1 is the admin role_id
+    }
+
+    /**
+     * Check if the user is a regular user.
+     *
+     * @return bool
+     */
+    public function isUser(): bool
+    {
+        return $this->role_id === 2; // Assuming 2 is the regular user role_id
+    }
 }
+
