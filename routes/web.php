@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('/', 'index')->name('index');
     Route::get('/books/index', 'index')->name('books.index');
     Route::get('/books/show/{id}', 'show')->name('books.show');
+    Route::get('/books/explore', 'explore')->name('books.explore');
  });
 
 //  Route::group(['middleware' => ['auth']], function () {

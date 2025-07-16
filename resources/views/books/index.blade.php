@@ -154,6 +154,7 @@
         <i class="ri-close-line login__close" id="login-close"></i>
     </div>
 
+    
     <!--==================== Register ====================-->
     <div class="register grid" id="register-content">
         <form action="{{ route('store') }}" method="post" class="register__form grid">
@@ -225,7 +226,7 @@
                         50% discount and much more.
                     </p>
 
-                    <a href="" class="button">Explore Now</a>
+                    <a href="{{route('books.explore')}}" class="button">Explore Now</a>
                 </div>
                 <div class="home__images">
                     <div class="home__swiper swiper">

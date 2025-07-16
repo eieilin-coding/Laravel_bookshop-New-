@@ -51,6 +51,14 @@ class BookController extends Controller
         // $archivedBooks = Book::onlyTrashed()->get();
     }
 
+    public function explore(){
+         $data = Book::get();
+        return view('books.explore', [
+            'books' => $data,
+        ]);
+
+    }
+
     public function adminInd()
     {
         $books = (Book::with(['author', 'category'])->withTrashed());
