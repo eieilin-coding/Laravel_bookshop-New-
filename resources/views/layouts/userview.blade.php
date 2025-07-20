@@ -21,11 +21,13 @@
     {{-- <link rel="stylesheet" href="assets/css/styles.css"> --}}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-   <link rel="stylesheet" href="{{ asset('css/detail.css') }}"> 
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dropdownlist.css') }}">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <!-- ==== To Overwrite Style ==== -->
-   @stack('styles')
+    @stack('styles')
 
     <title>Responsive book website - Bedimcode</title>
 </head>
@@ -39,8 +41,39 @@
             </a>
             <div class="nav__menu">
                 <ul class="nav__list">
-                   <!-- Deleted some nav items -->
-                    
+                    <!-- Deleted some nav items -->
+                    {{-- <li class="nav__item dropdown">
+                        <button class="nav__link dropdown-toggle">
+                            <i class="ri-folders-line"></i>
+                            <span>Categories</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a href="{{ route('books.byCategory', $category->id) }}" class="dropdown-item">
+                                        {{ $category->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+
+                    <li class="nav__item dropdown">
+                        <button class="nav__link dropdown-toggle">
+                            <i class="ri-user-line"></i>
+                            <span>Authors</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach ($authors as $author)
+                                <li>
+                                    <a href="{{ route('books.byAuthor', $author->id) }}" class="dropdown-item">
+                                        {{ $author->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li> --}}
+
                 </ul>
             </div>
 
@@ -48,7 +81,7 @@
                 <!-- Search button -->
                 <i class="ri-search-line search-button" id="search-button"></i>
 
-                 @auth
+                @auth
                     <!-- If the user is an admin -->
                     @if (auth()->user()->role_id == 1)
                         <a href="{{ route('admin.dashboard') }}" title="Admin Dashboard">
@@ -80,13 +113,14 @@
 
     <!--==================== SEARCH ====================-->
     <div class="search" id="search-content">
-        <form action="#" class="search__form">
+        <form action="{{ route('books.explore') }}" method="GET" class="search__form">
             <i class="ri-search-line search__icon"></i>
-            <input type="search" placeholder="What are you looking for?" class="search__input">
+            <input type="search" name="search" placeholder="What are you looking for?" class="search__input"
+                value="{{ request('search') }}" onkeydown="if(event.key === 'Enter') this.form.submit()">
+            {{-- <button type="submit" class="search-button" style="display: none;">Search</button> --}}
         </form>
         <i class="ri-close-line search__close" id="search-close"></i>
     </div>
-
     <!--==================== LOGIN ====================-->
     <div class="login grid" id="login-content">
         <form action="{{ route('authenticate') }}" method="post" class="login__form grid">
@@ -125,7 +159,7 @@
         <i class="ri-close-line login__close" id="login-close"></i>
     </div>
 
-    
+
     <!--==================== Register ====================-->
     <div class="register grid" id="register-content">
         <form action="{{ route('store') }}" method="post" class="register__form grid">
@@ -183,9 +217,9 @@
 
     <!--==================== MAIN ====================-->
     <main class="main">
-       
+
         @yield('content')
-       
+
     </main>
 
     <!--==================== FOOTER ====================-->
@@ -299,6 +333,10 @@
     <!--=============== MAIN JS ===============-->
     {{-- <script src="assets/js/main.js"></script> --}}
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <!--=============== DropDownList JS ===============-->
+    
+    <script src="{{ asset('js/dropdownlist.js') }}" defer></script>
 </body>
 
 </html>

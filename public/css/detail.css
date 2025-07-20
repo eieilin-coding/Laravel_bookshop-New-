@@ -66,6 +66,9 @@
     .btn-download {
         background-color: #dc3545;
     }
+    .btn-info {
+        background-color: #1094ae;
+    }
 
     .btn-download:hover {
         background-color: #c82333;

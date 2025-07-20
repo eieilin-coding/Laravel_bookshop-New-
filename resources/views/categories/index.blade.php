@@ -38,8 +38,11 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="categoryName" name="name"
-                                placeholder="Enter category name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="categoryName"
+                                name="name" placeholder="Enter category name">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -66,7 +69,11 @@
                         <input type="hidden" id="updateCategoryId" name="id">
                         <div class="mb-3">
                             <label for="updateCategoryName" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="updateCategoryName" name="name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                id="updateCategoryName" name="name">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">

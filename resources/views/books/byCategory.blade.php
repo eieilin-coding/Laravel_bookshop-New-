@@ -1,7 +1,8 @@
 @extends('layouts.userview')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/explore.css') }}">
+
+ <link rel="stylesheet" href="{{ asset('css/explore.css') }}">
 
     <section class="featured section" id="featured">
         <div class="featured__container container">
@@ -15,7 +16,7 @@
                         <div class="featured__prices">
                             <span class="featured__discount">$11.99</span>
                         </div>
-                        {{-- <button class="button">Add To Card</button> --}}
+                        <button class="button">Add To Card</button>
                         <div class="featured__actions">
                             {{-- <button><i class="ri-search-line"></i></button> --}}
                             <button><i class="ri-heart-3-line"></i></button>
@@ -26,19 +27,10 @@
             </div>
 
             <!-- Pagination -->
-            <div class="pagination">
+            {{-- <div class="pagination">
                 {{ $books->links() }}
-            </div>
-            {{-- <div class="dorpdownlist">
-                <label>Category</label>
-                <select class="form-select" name="category_id">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category['id'] }}">
-                            {{ $category['name'] }}
-                        </option>
-                    @endforeach
-                </select>
             </div> --}}
         </div>
     </section>
+
 @endsection

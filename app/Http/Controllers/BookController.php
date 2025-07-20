@@ -31,84 +31,68 @@ class BookController extends Controller
         //     'featuredBooks' => $featuredBooks, // Optional
         // ]);
 
-        $data = Book::get();
+        $data = Book::take(5)->get();
 
-        $latestBooks = Book::latest()->get();
+        $latestBooks = Book::latest()->take(5)->get();
 
         return view('books.index', [
             'books' => $data,
             'latestBooks' => $latestBooks,
         ]);
 
-
-        // // Get only active (non-archived) books
-        // $activeBooks = Book::all();
-
-        // // Include archived books
-        // $allBooksIncludingArchived = Book::withTrashed()->get();
-
-        // // Get only archived books
-        // $archivedBooks = Book::onlyTrashed()->get();
     }
 
-    public function explore(){
-         $data = Book::get();
-        return view('books.explore', [
-            'books' => $data,
-        ]);
-
-    }
-
-    public function adminInd()
+    public function userview()
     {
-        $books = (Book::with(['author', 'category'])->withTrashed());
-        if (request()->ajax()) {
-            return DataTables::of($books)
-                ->addIndexColumn()
-                ->addColumn('status', function ($row) {
-                    return $row->trashed() ?
-                        '<span class="badge badge-danger">Archived</span>' :
-                        '<span class="badge badge-success">Active</span>';
-                })
-                ->addColumn('action', function ($row) {
-                    $btn = '';
-                    if ($row->trashed()) {
-                        $btn .= '<a href="' . route('books.restore', $row->id) . '" class="btn btn-sm btn-info">Restore</a> ';
-                    } else {
-                        $btn .= '<a href="' . route('books.edit', $row->id) . '" class="btn btn-sm btn-primary">Edit</a> ';
-                        $btn .= '<a href="' . route('books.archive', $row->id) . '" class="btn btn-sm btn-warning">Archive</a> ';
-                    }
-                    return $btn;
-                })
-                ->rawColumns(['status', 'action'])
-                ->make(true);
-        }
-        return view('books.adminInd');
+        $categories = Category::all();
+        $authors = Author::all();
+
+        return view('layouts.userview', compact('categories', 'authors'));
     }
 
-    public function archive($id)
+    public function byCategory(Category $category)
     {
-        $book = Book::findOrFail($id);
-        $book->delete();
+        $categories = Category::all();
+        $authors = Author::all();        
+        $books = $category->books()->paginate(8);
+        return view('books.byCategory', compact('books', 'category', 'categories', 'authors'));
+    }
 
-        if (request()->ajax()) {
-            return response()->json(['message' => 'Book archived successfully']);
+    public function byAuthor(Author $author)
+    {
+        $authors = Author::all();
+        $categories = Category::all();
+
+        $books = $author->books()->paginate(8);
+        return view('books.byAuthor', compact('books', 'author', 'authors', 'categories'));
+    }
+
+    public function explore(Request $request)
+    {
+        $categories = Category::all();
+        $authors = Author::all();
+       
+        $query = Book::query()->with(['author', 'category']);
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhereHas('author', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('category', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            });
         }
 
-        return redirect()->back()->with('success', 'Book archived successfully');
+        $books = $query->paginate(8);
+
+        return view('books.explore', compact('books', 'categories', 'authors'));
     }
 
-    public function restore($id)
-    {
-        $book = Book::withTrashed()->findOrFail($id);
-        $book->restore();
-
-        if (request()->ajax()) {
-            return response()->json(['message' => 'Book restored successfully']);
-        }
-
-        return redirect()->back()->with('success', 'Book restored successfully');
-    }
 
     public function adminIndex()
     {
@@ -122,15 +106,16 @@ class BookController extends Controller
                     $edit = "";
                     $delete = "";
 
-                    $edit = '<a href="' . route('books.edit', [$row->id]) . '" class="edit btn btn-primary btn-md">
+                    $edit = '<a href="' . route('books.edit', [$row->id]) . '" class="edit btn btn-primary btn-md me-2">
                     <i class="fa-solid fa-pen-to-square"></i></a>';
                     $btn .= $edit;
 
-                    $show = '<a href="' . route('books.show', [$row->id]) . '" class="show btn btn-info btn-md">
+                    $show = '<a href="' . route('books.show', [$row->id]) . '" class="show btn btn-info btn-md me-2">
                     <i class="fa-solid fa-eye"></i></a>';
                     $btn .= $show;
 
-                    $delete = '<a href="' . route('books.delete', [$row->id]) . '" class="delete btn btn-danger btn-md">
+                    $delete = '<a href="' . route('books.delete', [$row->id]) . '" class="delete btn btn-danger btn-md"
+                    onclick="return confirm(\'Are you sure you want to delete this book?\')">
                     <i class="fa-solid fa-trash"></i></a>';
                     $btn .= $delete;
 
@@ -270,10 +255,7 @@ class BookController extends Controller
     public function download($id)
     {
         $book = Book::findOrFail($id);
-
-        // Update download count
-        $book->increment('download_count');
-
+        info("here");
         // Assume the 'file' column stores the relative path like 'books/mybook.pdf'
         $filePath = storage_path('app/public/files/' . $book->file); // If stored in storage/app/public
 
@@ -281,7 +263,14 @@ class BookController extends Controller
             return abort(404, 'File not found.');
         }
 
+        // Update download count
+        // $book->increment('download_count');
+        Book::where('id', $id)->increment('download_count');
+
         // Return file download response
-        return response()->download($filePath, basename($filePath));
+        return response()->download($filePath, basename($filePath), [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate',
+            'Pragma' => 'no-cache'
+        ]);
     }
 }

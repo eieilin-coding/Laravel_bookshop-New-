@@ -1,0 +1,121 @@
+.featured__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+/* .featured__card {
+            position: relative;
+            text-align: center;
+            width: 250px;
+            height: 400px;
+            background-color: var(--container-color);
+            padding: 2rem;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            transition: border .4s, background-color .4s;
+        } */
+.featured__card {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    height: 330px;
+    /* min-height: 400px; */
+    background-color: var(--container-color);
+    padding: 1.5rem;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+    transition: border .4s, background-color .4s;
+    margin: 0 auto;
+}
+
+.featured__card:hover .featured__actions {
+    right: 1.3rem;
+}
+
+/* .featured__img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+        } */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* .pagination ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        } */
+.pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a,
+.pagination span {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #747373;
+}
+
+.pagination a:hover {
+    background-color: #eee;
+}
+
+.pagination .active span {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .disabled span {
+    color: #aaa;
+    border-color: #ddd;
+}
+
+@media (min-width: 576px) {
+    .featured__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .featured__card {
+        max-width: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .featured__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .featured__grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .featured__grid {
+        gap: 24px;
+    }
+
+    .featured__card {
+        padding: 2rem;
+    }
+}

@@ -22,16 +22,18 @@ class UserController extends Controller
                         
                         $ban = "";
 
-                        if($row->suspensed == 1){
-                        $ban = '<a href="'.route('users.unsuspended',[$row->id]).'" class="ban btn btn-outline-warning btn-md">Ban</a>';
-                        $btn .= $ban;
-                        }
-                        else {
-                        $ban = '<a href="'.route('users.suspended',[$row->id]).'" class="ban btn btn-warning btn-md"><i class="fa-solid fa-ban"></i></a>';
-                        $btn .= $ban;
-                        }
+                        // if($row->suspensed == 1){
+                        // $ban = '<a href="'.route('users.unsuspended',[$row->id]).'" class="ban btn btn-outline-warning btn-md">Ban</a>';
+                        // $btn .= $ban;
+                        // }
+                        // else {
+                        // $ban = '<a href="'.route('users.suspended',[$row->id]).'" class="ban btn btn-warning btn-md"><i class="fa-solid fa-ban"></i></a>';
+                        // $btn .= $ban;
+                        // }
 
-                        $del = '<a href="'.route('users.delete',[$row->id]).'" class="delete btn btn-danger btn-md"><i class="fa-solid fa-trash"></i></a>';
+                        $del = '<a href="'.route('users.delete',[$row->id]).'" class="delete btn btn-danger btn-md"
+                        onclick="return confirm(\'Are you sure you want to delete this user?\')">
+                        <i class="fa-solid fa-trash"></i></a>';
                         $btn .= $del;
 
                         return $btn;

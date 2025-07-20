@@ -38,8 +38,11 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="authorName" class="form-label">Author Name</label>
-                            <input type="text" class="form-control" id="authorName" name="name"
-                                placeholder="Enter author name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="authorName"
+                                name="name" placeholder="Enter author name">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -65,7 +68,11 @@
                         <input type="hidden" id="updateAuthorId" name="id">
                         <div class="mb-3">
                             <label for="updateAuthorName" class="form-label">Author Name</label>
-                            <input type="text" class="form-control" id="updateAuthorName" name="name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                id="updateAuthorName" name="name">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -120,7 +127,6 @@
             });
 
         });
-
     </script>
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

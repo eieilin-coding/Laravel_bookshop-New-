@@ -112,9 +112,10 @@
                     @enderror
                 </div>
                 <div>
-                    <span class="login__signup">
-                        You do not have an account? <a href="#">Sign up</a>
-                    </span>
+                    {{-- <span class="login__signup">
+                        You do not have an account? 
+                        <a href="#">Sign up</a>
+                    </span> --}}
                     {{-- <a href="#" class="login__forgot">
                         You forgot your password
                     </a> --}}

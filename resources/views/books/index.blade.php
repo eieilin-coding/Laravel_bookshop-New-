@@ -109,9 +109,11 @@
 
     <!--==================== SEARCH ====================-->
     <div class="search" id="search-content">
-        <form action="#" class="search__form">
+        <form action="{{ route('books.explore') }}" method="GET" class="search__form">
             <i class="ri-search-line search__icon"></i>
-            <input type="search" placeholder="What are you looking for?" class="search__input">
+            <input type="search" name="search" placeholder="What are you looking for?" class="search__input"
+                value="{{ request('search') }}" onkeydown="if(event.key === 'Enter') this.form.submit()">
+            {{-- <button type="submit" class="search-button" style="display: none;">Search</button> --}}
         </form>
         <i class="ri-close-line search__close" id="search-close"></i>
     </div>
@@ -140,9 +142,9 @@
                     @enderror
                 </div>
                 <div>
-                    <span class="login__signup">
+                    {{-- <span class="login__signup">
                         You do not have an account? <a href="#">Sign up</a>
-                    </span>
+                    </span> --}}
                     {{-- <a href="#" class="login__forgot">
                         You forgot your password
                     </a> --}}
@@ -154,7 +156,7 @@
         <i class="ri-close-line login__close" id="login-close"></i>
     </div>
 
-    
+
     <!--==================== Register ====================-->
     <div class="register grid" id="register-content">
         <form action="{{ route('store') }}" method="post" class="register__form grid">
@@ -226,24 +228,26 @@
                         50% discount and much more.
                     </p>
 
-                    <a href="{{route('books.explore')}}" class="button">Explore Now</a>
+                    <a href="{{ route('books.explore') }}" class="button">Explore Now</a>
                 </div>
                 <div class="home__images">
                     <div class="home__swiper swiper">
                         <div class="swiper-wrapper">
                             <article class="home__article swiper-slide">
                                 {{-- <img src="{{ asset('storage/photos/' . $book->photo) }}" class=" book-card-img"> --}}
-                                <img src="{{ asset('storage/photos/home-book-1.png') }}" alt="image"
+                                {{-- <img src="{{ asset('storage/photos/home-book-1.png') }}" alt="image"
+                                    class="home__img"> --}}
+                                <img src="{{ asset('storage/photos/book-3.png') }}" alt="image"
                                     class="home__img">
                             </article>
 
                             <article class="home__article swiper-slide">
-                                <img src="{{ asset('storage/photos/home-book-2.png') }}" alt="image"
+                                <img src="{{ asset('storage/photos/book-5.png') }}" alt="image"
                                     class="home__img">
                             </article>
 
                             <article class="home__article swiper-slide">
-                                <img src="{{ asset('storage/photos/home-book-3.png') }}" alt="image"
+                                <img src="{{ asset('storage/photos/book-9.png') }}" alt="image"
                                     class="home__img">
                             </article>
 
@@ -301,9 +305,9 @@
                                     <span class="featured__discount">$11.99</span>
                                     {{-- <span class="featured__price">$19.99</span> --}}
                                 </div>
-                                <button class="button">Add To Card</button>
+                                {{-- <button class="button">Add To Card</button> --}}
                                 <div class="featured__actions">
-                                    <button><i class="ri-search-line"></i></button>
+                                    {{-- <button><i class="ri-search-line"></i></button> --}}
                                     <button><i class="ri-heart-3-line"></i></button>
                                     <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
                                     {{-- <button><i class="ri-eye-line"></i></button> --}}
@@ -318,6 +322,7 @@
                         <i class="ri-arrow-right-s-line"></i>
                     </div>
                 </div>
+                <a href="{{ route('books.explore') }}" class="see__more">See All Featured Books >>> </a>
             </div>
         </section>
 
@@ -361,18 +366,14 @@
                                     <img src=" {{ asset('storage/photos/' . $book->photo) }}" alt="image"
                                         class="featured__img">
                                 @endif
-                                <h2 class="featured__title">{{ $book->title }}</h2>
-                                {{-- <h2 class="featured__title">Featured Book</h2> --}}
+                                <h2 class="featured__title">{{ $book->title }}</h2>                                
                                 <div class="featured__prices">
                                     <span class="featured__discount">$11.99</span>
                                     <span class="featured__price">$19.99</span>
-                                </div>
-                                <button class="button">Add To Card</button>
-                                <div class="featured__actions">
-                                    <button><i class="ri-search-line"></i></button>
+                                </div>                               
+                                <div class="featured__actions">                                   
                                     <button><i class="ri-heart-3-line"></i></button>
-                                    <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
-                                    {{-- <button><i class="ri-eye-line"></i></button> --}}
+                                    <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>                                   
                                 </div>
                             </article>
                         @endforeach
@@ -384,6 +385,7 @@
                         <i class="ri-arrow-right-s-line"></i>
                     </div>
                 </div>
+                <a href="{{ route('books.explore') }}" class="see__more">See All Discount Books >>> </a>
             </div>
         </section>
 
@@ -420,6 +422,7 @@
                         @endforeach
                     </div>
                 </div>
+                <a href="{{ route('books.explore') }}" class="see__more">See All New Books >>> </a>
             </div>
         </section>
 
@@ -433,10 +436,15 @@
                         The Latest Updates
                     </h2>
 
-                    <form action="" class="join__form">
+                    <form action="{{ route('subscribe') }}" class="join__form" method="POST">
                         <input type="email" placeholder="Enter email" class="join__input">
                         <button type="submit" class="join__button button">Subscribe</button>
                     </form>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>
