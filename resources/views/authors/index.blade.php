@@ -43,6 +43,15 @@
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            {{-- @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error )
+                                       <li>{{ $error }}</li> 
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif --}}
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -73,6 +82,7 @@
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -94,7 +104,11 @@
             $('#updateAuthorForm').attr('action', `/authors/update/${id}`);
         });
     </script>
-
+    @if(session('errors'))
+        <script>
+            $('#createAuthorModal').modal('show');
+        </script>
+    @endif
     <script type="text/javascript">
         var $j = jQuery.noConflict();
         $j(function() {
@@ -128,6 +142,8 @@
 
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 @endsection

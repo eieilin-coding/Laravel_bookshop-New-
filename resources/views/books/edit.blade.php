@@ -11,7 +11,8 @@
                         class="form-select form-control @error('category_id') is-invalid @enderror">
                         <option value="">-- Select Category --</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" @selected($book->category_id == $category->id)>
+                            <option value="{{ $category->id }}" @selected($book->category_id == $category->id)
+                                {{ old('category_id', $book->category_id ?? '') == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -27,7 +28,8 @@
                         class="form-select form-control @error('author_id') is-invalid @enderror">
                         <option value="">-- Select Author --</option>
                         @foreach ($authors as $author)
-                            <option value="{{ $author->id }}" @selected($book->author_id == $author->id)>
+                            <option value="{{ $author->id }}" @selected($book->author_id == $author->id) 
+                                {{ old('author_id', $book->author_id ?? '') == $author->id ? 'selected' : '' }}>
                                 {{ $author->name }}
                             </option>
                         @endforeach
@@ -42,7 +44,7 @@
                 <div class="col-md-6">
                     <label for="title" class="form-label fw-semibold">Book Title</label>
                     <input type="text" name="title" id="title"
-                        class="form-control @error('title') is-invalid @enderror" value="{{ $book->title }}">
+                        class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $book->title) }}">
                     @error('title')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -51,7 +53,7 @@
                 <div class="col-md-6">
                     <label for="publisher" class="form-label fw-semibold">Publisher</label>
                     <input type="text" name="publisher" id="publisher"
-                        class="form-control  @error('publisher') is-invalid @enderror" value="{{ $book->publisher }}">
+                        class="form-control  @error('publisher') is-invalid @enderror" value="{{ old('publisher', $book->publisher) }}">
                     @error('publisher')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -63,7 +65,7 @@
                     <label for="published_date" class="form-label fw-semibold">Published Date</label>
                     <input type="date" name="published_date" id="published_date"
                         class="form-control @error('published_date') is-invalid @enderror"
-                        value="{{ $book->published_date }}">
+                        value="{{ old('published_date', $book->published_date) }}">
                     @error('published_date')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

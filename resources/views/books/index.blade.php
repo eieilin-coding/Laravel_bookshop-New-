@@ -293,7 +293,7 @@
             <div class="featured__container container">
                 <div class="featured__swiper swiper">
                     <div class="swiper-wrapper">
-                        @foreach ($books as $book)
+                        @foreach ($featuredBooks as $book)
                             <article class="featured__card swiper-slide">
                                 @if ($book->photo)
                                     <img src=" {{ asset('storage/photos/' . $book->photo) }}" alt="image"
@@ -322,7 +322,7 @@
                         <i class="ri-arrow-right-s-line"></i>
                     </div>
                 </div>
-                <a href="{{ route('books.explore') }}" class="see__more">See All Featured Books >>> </a>
+                <a href="{{ route('books.featuredBooks') }}" class="see__more">See All Featured Books >>> </a>
             </div>
         </section>
 
@@ -355,12 +355,12 @@
 
         <section class="featured section" id="discount">
             <h2 class="section__title">
-                Discount Books
+                Highlight Books
             </h2>
             <div class="featured__container container">
                 <div class="featured__swiper swiper">
                     <div class="swiper-wrapper">
-                        @foreach ($books as $book)
+                        @foreach ($discountBooks as $book)
                             <article class="featured__card swiper-slide">
                                 @if ($book->photo)
                                     <img src=" {{ asset('storage/photos/' . $book->photo) }}" alt="image"
@@ -369,7 +369,7 @@
                                 <h2 class="featured__title">{{ $book->title }}</h2>                                
                                 <div class="featured__prices">
                                     <span class="featured__discount">$11.99</span>
-                                    <span class="featured__price">$19.99</span>
+                                    {{-- <span class="featured__price">$19.99</span> --}}
                                 </div>                               
                                 <div class="featured__actions">                                   
                                     <button><i class="ri-heart-3-line"></i></button>
@@ -385,7 +385,7 @@
                         <i class="ri-arrow-right-s-line"></i>
                     </div>
                 </div>
-                <a href="{{ route('books.explore') }}" class="see__more">See All Discount Books >>> </a>
+                <a href="{{ route('books.discountBooks') }}" class="see__more">See All Discount Books >>> </a>
             </div>
         </section>
 
@@ -397,7 +397,7 @@
             <div class="new__container container">
                 <div class="new__swiper swiper">
                     <div class="swiper-wrapper">
-                        @foreach ($latestBooks as $book)
+                        @foreach ($newBooks as $book)
                             <a href="#" class="new__card swiper-slide">
                                 @if ($book->photo)
                                     <img src="{{ asset('storage/photos/' . $book->photo) }}" alt="image"
@@ -422,7 +422,7 @@
                         @endforeach
                     </div>
                 </div>
-                <a href="{{ route('books.explore') }}" class="see__more">See All New Books >>> </a>
+                <a href="{{ route('books.newBooks') }}" class="see__more">See All New Books >>> </a>
             </div>
         </section>
 

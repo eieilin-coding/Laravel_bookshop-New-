@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 
-class AuthorController extends Controller 
+class AuthorController extends Controller
 {
     public function index()
     {
@@ -42,22 +42,23 @@ class AuthorController extends Controller
         return view('authors.index');
     }
 
-    public function store()
+
+    public function store(Request $request)
     {
-        $validator = validator(request()->all(), [
+        $validator = validator($request->all(), [
             'name' => 'required|string|max:255|unique:authors,name',
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator);
+            return redirect()->back()
+                ->withErrors($validator) // This is the Laravel standard way
+                ->withInput();
         }
-        $author = new Author;
-        $author->name = request()->name;
-        $author->save();
 
-        return redirect()->route('authors.index');
+        Author::create(['name' => $request->name]);
+
+        return redirect()->route('authors.index')->with('success', 'Author created successfully!');
     }
-
     public function update($id)
     {
         $validator = validator(request()->all(), [

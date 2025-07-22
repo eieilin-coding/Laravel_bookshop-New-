@@ -8,38 +8,52 @@ use App\Models\Author;
 use App\Models\Category;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BookController extends Controller
 {
+
+
     public function index()
     {
+        
+        // Discount books: download_count = 0
+        $discountBooks = Book::where('download_count', 0)->take(5)->get();       
 
-        //     // Latest books (sorted by newest first)
-        // $latestBooks = Book::latest()->take(4)->get(); // Adjust `take(4)` as needed
+        // Featured books: download_count > 7
+        $featuredBooks = Book::where('download_count', '>', 7)->take(5)->get();       
 
-        // // Discounted books (where discount > 0)
-        // $discountedBooks = Book::where('discount', '>', 0)->get();
+        // New books: created within the last 2 weeks
+        $newBooks = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->take(5)->get();       
 
-        // // Featured books (optional, if needed)
-        // $featuredBooks = Book::where('is_featured', true)->get(); // Requires a `is_featured` column
-
-        // return view('books.index1', [
-        //     'latestBooks' => $latestBooks,
-        //     'discountedBooks' => $discountedBooks,
-        //     'featuredBooks' => $featuredBooks, // Optional
-        // ]);
-
-        $data = Book::take(5)->get();
-
-        $latestBooks = Book::latest()->take(5)->get();
-
-        return view('books.index', [
-            'books' => $data,
-            'latestBooks' => $latestBooks,
+        return view('books.index', [            
+            'discountBooks' => $discountBooks,
+            'featuredBooks' => $featuredBooks,
+            'newBooks' => $newBooks,                   
         ]);
+    }
 
+    public function discount(){
+         $discount = Book::where('download_count', 0)->paginate(8);         
+        return view('books.discountBooks', [
+            'discount' => $discount,
+        ]);
+    }
+
+    public function featured(){
+         $featured = Book::where('download_count', '>', 7)->paginate(8);         
+        return view('books.featuredBooks', [
+            'featured' => $featured,
+        ]);
+    }
+
+    public function new(){
+       $new = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->paginate(8);      
+        return view('books.newBooks', [
+           'new' => $new,
+        ]);
     }
 
     public function userview()
@@ -50,28 +64,28 @@ class BookController extends Controller
         return view('layouts.userview', compact('categories', 'authors'));
     }
 
-    public function byCategory(Category $category)
-    {
-        $categories = Category::all();
-        $authors = Author::all();        
-        $books = $category->books()->paginate(8);
-        return view('books.byCategory', compact('books', 'category', 'categories', 'authors'));
-    }
+    // public function byCategory(Category $category)
+    // {
+    //     $categories = Category::all();
+    //     $authors = Author::all();
+    //     $books = $category->books()->paginate(8);
+    //     return view('books.byCategory', compact('books', 'category', 'categories', 'authors'));
+    // }
 
-    public function byAuthor(Author $author)
-    {
-        $authors = Author::all();
-        $categories = Category::all();
+    // public function byAuthor(Author $author)
+    // {
+    //     $authors = Author::all();
+    //     $categories = Category::all();
 
-        $books = $author->books()->paginate(8);
-        return view('books.byAuthor', compact('books', 'author', 'authors', 'categories'));
-    }
+    //     $books = $author->books()->paginate(8);
+    //     return view('books.byAuthor', compact('books', 'author', 'authors', 'categories'));
+    // }
 
     public function explore(Request $request)
     {
         $categories = Category::all();
         $authors = Author::all();
-       
+
         $query = Book::query()->with(['author', 'category']);
 
         if ($request->has('search') && !empty($request->search)) {
@@ -169,7 +183,8 @@ class BookController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator);
+            return back()->withErrors($validator)
+                ->withInput(); // <- To get old input data ;
         }
 
         // Store the uploaded files in 'public' disk
@@ -255,22 +270,14 @@ class BookController extends Controller
     public function download($id)
     {
         $book = Book::findOrFail($id);
-        info("here");
-        // Assume the 'file' column stores the relative path like 'books/mybook.pdf'
+        $book->increment('download_count');
         $filePath = storage_path('app/public/files/' . $book->file); // If stored in storage/app/public
 
         if (!file_exists($filePath)) {
             return abort(404, 'File not found.');
         }
 
-        // Update download count
-        // $book->increment('download_count');
-        Book::where('id', $id)->increment('download_count');
-
         // Return file download response
-        return response()->download($filePath, basename($filePath), [
-            'Cache-Control' => 'no-store, no-cache, must-revalidate',
-            'Pragma' => 'no-cache'
-        ]);
+        return response()->download($filePath, basename($filePath));
     }
 }

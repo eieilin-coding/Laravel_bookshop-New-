@@ -11,7 +11,7 @@
                         class="form-select form-control  @error('category_id') is-invalid @enderror">
                         <option value="">-- Select Category --</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -27,7 +27,7 @@
                         class="form-select form-control @error('author_id') is-invalid @enderror">
                         <option value="">-- Select Author --</option>
                         @foreach ($authors as $author)
-                            <option value="{{ $author->id }}">
+                            <option value="{{ $author->id }}" {{ old('author_id') == $author->id ? 'selected' : '' }}>
                                 {{ $author->name }}
                             </option>
                         @endforeach
@@ -41,7 +41,7 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label for="title" class="form-label fw-semibold">Book Title</label>
-                    <input type="text" name="title" id="title"
+                    <input type="text" name="title" id="title"  value="{{ old('title') }}"
                         class="form-control @error('title') is-invalid @enderror" placeholder="Enter book title">
                     @error('title')
                         <span class="text-danger">{{ $message }}</span>
@@ -50,7 +50,7 @@
 
                 <div class="col-md-6">
                     <label for="publisher" class="form-label fw-semibold">Publisher</label>
-                    <input type="text" name="publisher" id="publisher"
+                    <input type="text" name="publisher" id="publisher"  value="{{ old('publisher') }}"
                         class="form-control @error('publisher') is-invalid @enderror" placeholder="Enter publisher">
                     @error('publisher')
                         <span class="text-danger">{{ $message }}</span>
@@ -61,7 +61,7 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label for="published_date" class="form-label fw-semibold">Published Date</label>
-                    <input type="date" name="published_date" id="published_date"
+                    <input type="date" name="published_date" id="published_date"  value="{{ old('published_date') }}"
                         class="form-control @error('published_date') is-invalid @enderror">
                     @error('published_date')
                         <span class="text-danger">{{ $message }}</span>
@@ -70,7 +70,7 @@
 
                 <div class="col-md-6">
                     <label for="book_photo" class="form-label fw-semibold">Book Cover (Photo)</label>
-                    <input type="file" id="photo" name="photo"
+                    <input type="file" id="photo" name="photo"  value="{{ old('photo') }}"
                         class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                     @error('photo')
                         <span class="text-danger">{{ $message }}</span>
@@ -82,7 +82,7 @@
             <div class="mb-3">
                 <label for="description" class="form-label fw-semibold">Description</label>
                 <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                    rows="3" placeholder="Short book description"></textarea>
+                    rows="3"  placeholder="Short book description">{{ old('description') }}</textarea>
                 @error('description')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -91,7 +91,7 @@
             <div class="mb-4">
                 <label for="book_pdf" class="form-label fw-semibold">Upload Book PDF</label>
                 <input type="file" id="pdf" name="file" class="form-control @error('file') is-invalid @enderror"
-                    accept="application/pdf">
+                     value="{{ old('file') }}" accept="application/pdf">
                 @error('file')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror

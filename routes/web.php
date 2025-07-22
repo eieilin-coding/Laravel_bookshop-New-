@@ -27,7 +27,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::controller(AuthorController::class)->group(function () {
         Route::get('/authors/index', 'index')->name('authors.index');
+        Route::get('/authors/test', 'index')->name('authors.test');
         Route::post('/authors/store', 'store')->name('authors.store');
+        
         Route::post('/authors/update/{id}', 'update')->name('authors.update');
         Route::get('authors/delete/{id}', 'delete')->name('authors.delete');
     });
@@ -71,13 +73,20 @@ Route::controller(BookController::class)->group(function () {
     Route::get('/books/index', 'index')->name('books.index');
     Route::get('/books/show/{id}', 'show')->name('books.show');
     Route::get('/books/explore', 'explore')->name('books.explore');
+    Route::get('/books/featuredBooks', 'featured')->name('books.featuredBooks');
+    Route::get('/books/discountBooks', 'discount')->name('books.discountBooks');
+    Route::get('/books/newBooks', 'new')->name('books.newBooks');
 });
 
-Route::group(['middleware' => ['auth', 'role:user|admin']], function () {
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/books/{id}/download', 'download')->name('books.download');
-    });
-});
+Route::controller(BookController::class)->group(function () {
+    Route::get('/books/{id}/download', 'download')->name('books.download');
+ });
+
+// Route::group(['middleware' => ['auth', 'role:user|admin']], function () {
+//     Route::controller(BookController::class)->group(function () {
+//         Route::get('/books/{id}/download', 'download')->name('books.download');
+//     });
+// });
 
 //  Route::get('/layouts/userview', function () {
 //     return view('layouts.userview');
@@ -100,3 +109,5 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'can:admin'])->group(fun
     Route::get('/subscribers', [NewsletterController::class, 'index'])->name('admin.subscribers');
     Route::post('/send-newsletter', [NewsletterController::class, 'send'])->name('admin.send-newsletter');
 });
+
+
