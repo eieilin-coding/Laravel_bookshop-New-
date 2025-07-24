@@ -17,12 +17,7 @@ class WishlistController extends Controller
     }
 
     public function toggle(Request $request)
-    {
-        // // Ensure the user is logged in
-        // if (!Auth::check()) {
-        //     return response()->json(['success' => false, 'message' => 'Please log in to manage your wishlist.'], 401);
-        //     // return redirect('/auth/login');
-        // }
+    {       
          // Ensure the user is logged in
     if (!Auth::check()) {
         // Return a JSON response with a specific status and message
@@ -46,7 +41,8 @@ class WishlistController extends Controller
             // Book is in the wishlist, so we remove it
             $wishlistItem->delete();
             $action = 'removed';
-            $message = 'Product removed from Wishlist';
+            $message = 'Product
+             removed from Wishlist';
         } else {
             // Book is not in the wishlist, so we add it
             Wishlist::create([
@@ -78,51 +74,7 @@ class WishlistController extends Controller
     }
 
 
-    // public function add($bookId)
-    // {
-    //     try {
-    //         // Check if user is authenticated
-    //         if (!Auth::check()) {
-    //             return response()->json([
-    //                 'success' => false,
-    //                 'message' => 'You must be logged in to add books to your wishlist.'
-    //             ], 401); // 401 Unauthorized status code
-    //         }
-
-    //         // Check if book exists
-    //         $book = Book::findOrFail($bookId);
-
-    //         // Add to wishlist if not already exists
-    //         $wishlistItem = Wishlist::firstOrCreate([
-    //             'user_id' => Auth::id(),
-    //             'book_id' => $bookId
-    //         ]);
-
-    //         // Return JSON response
-    //         return response()->json([
-    //             'success' => true,
-    //             'status' => $wishlistItem->wasRecentlyCreated ? 'added' : 'already_exists',
-    //             'message' => $wishlistItem->wasRecentlyCreated
-    //                 ? 'Book added to wishlist successfully'
-    //                 : 'Book is already in your wishlist',
-    //             'book' => [
-    //                 'id' => $book->id,
-    //                 'title' => $book->title,
-    //                 'photo' => $book->photo ? asset('storage/photos/' . $book->photo) : null
-    //             ]
-    //         ]);
-    //     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Book not found'
-    //         ], 404);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Failed to add to wishlist: ' . $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
+  
 
     public function remove($id)
     {
