@@ -281,6 +281,13 @@ body.dark-theme {
   color: var(--first-color);
 }
 
+#wishlist-count {
+        position: relative;
+        top: -1rem;
+        left: -1rem;
+
+    }
+
 /*=============== SEARCH ===============*/
 .search {
   position: fixed;
@@ -573,7 +580,7 @@ body.dark-theme {
   transition: right .4s;
 }
 
-.featured__actions button, .ri-eye-line {
+.featured__actions button, .ri-eye-line, .ri-heart-3-line {
   background: none;
   font-size: 1.25rem;
   color: var(--first-color);

@@ -1,8 +1,13 @@
+{{-- resources/views/explore.blade.php --}}
+
 @extends('layouts.userview')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/explore.css') }}">
-
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.min.css">
+       
+    
     <section class="featured section" id="featured">
         <div class="featured__container container">
             <div class="featured__grid">
@@ -15,30 +20,34 @@
                         <div class="featured__prices">
                             <span class="featured__discount">$11.99</span>
                         </div>
-                        {{-- <button class="button">Add To Card</button> --}}
                         <div class="featured__actions">
-                            {{-- <button><i class="ri-search-line"></i></button> --}}
-                            <button><i class="ri-heart-3-line"></i></button>
+                            <button class="wishlist-btn" data-book-id="{{ $book->id }}" data-book-title="{{ $book->title }}">
+                                <i class="ri-heart-3-line"></i>
+                            </button>
                             <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
                         </div>
                     </article>
                 @endforeach
             </div>
 
-            <!-- Pagination -->
             <div class="pagination">
                 {{ $books->links() }}
             </div>
-            {{-- <div class="dorpdownlist">
-                <label>Category</label>
-                <select class="form-select" name="category_id">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category['id'] }}">
-                            {{ $category['name'] }}
-                        </option>
-                    @endforeach
-                </select>
-            </div> --}}
         </div>
     </section>
+
+    <div class="modal-overlay" id="wishlistModalOverlay"></div>
+    <div class="wishlist-modal" id="wishlistModal">
+        <div class="modal-content">
+            <div class="modal-icon-container" id="modalIcon">
+                </div>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-message" id="modalMessage"></p>
+            <div class="modal-actions">
+                <a href="{{ route('wishlist.index') }}" class="button">View Wishlist</a>
+                <button class="button close-modal" id="closeModal">Close</button>
+            </div>
+        </div>
+    </div>     
+    
 @endsection

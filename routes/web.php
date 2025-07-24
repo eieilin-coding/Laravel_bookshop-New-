@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\WishlistController;
 
 
 Route::controller(LoginRegisterController::class)->group(function () {
@@ -110,4 +111,16 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'can:admin'])->group(fun
     Route::post('/send-newsletter', [NewsletterController::class, 'send'])->name('admin.send-newsletter');
 });
 
+// routes/web.php
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');   
+    // Route::get('/wishlist/add/{bookId}', [WishlistController::class, 'add'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+});
 
+Route::post('/wishlist/add/{bookId}', [WishlistController::class, 'add'])->name('wishlist.add')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+    Route::get('/wishlist/count', [WishlistController::class, 'getCount'])->name('wishlist.count');
+});

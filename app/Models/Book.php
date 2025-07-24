@@ -13,12 +13,20 @@ class Book extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'author_id', 'category_id', 'title', 'publisher', 'published_date',
-        'description', 'photo', 'file', 'temp_delete', 'download_count',
+        'author_id',
+        'category_id',
+        'title',
+        'publisher',
+        'published_date',
+        'description',
+        'photo',
+        'file',
+        'temp_delete',
+        'download_count',
         'deleted_at'
     ];
-    
-     public function author()
+
+    public function author()
     {
         return $this->belongsTo(Author::class);
     }
@@ -26,5 +34,10 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }

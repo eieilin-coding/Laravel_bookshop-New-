@@ -18,7 +18,10 @@
                         {{-- <button class="button">Add To Card</button> --}}
                         <div class="featured__actions">
                             {{-- <button><i class="ri-search-line"></i></button> --}}
-                            <button><i class="ri-heart-3-line"></i></button>
+                            {{-- <button><i class="ri-heart-3-line"></i></button> --}}
+                            <button class="wishlist-btn" data-book-id="{{ $book->id }}" data-book-title="{{ $book->title }}">
+                                <i class="ri-heart-3-line"></i>
+                            </button>
                             <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
                         </div>
                     </article>
@@ -31,4 +34,17 @@
             </div>            
         </div>
     </section>
+     <div class="modal-overlay" id="wishlistModalOverlay"></div>
+    <div class="wishlist-modal" id="wishlistModal">
+        <div class="modal-content">
+            <div class="modal-icon-container" id="modalIcon">
+                </div>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-message" id="modalMessage"></p>
+            <div class="modal-actions">
+                <a href="{{ route('wishlist.index') }}" class="button">View Wishlist</a>
+                <button class="button close-modal" id="closeModal">Close</button>
+            </div>
+        </div>
+    </div>   
 @endsection

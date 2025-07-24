@@ -20,6 +20,7 @@
     <!--=============== CSS ===============-->
     {{-- <link rel="stylesheet" href="assets/css/styles.css"> --}}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/wishlist.css') }}">
 
 
     <title>Responsive book website - Bedimcode</title>
@@ -76,6 +77,12 @@
             <div class="nav__actions">
                 <!-- Search button -->
                 <i class="ri-search-line search-button" id="search-button"></i>
+                @if (Auth::check())
+                    <a href="{{ route('wishlist.index') }}" class="wishlist-icon">
+                        <i class="ri-heart-3-line"></i>
+                        <span id="wishlist-count" class="wishlist-badge">0</span>
+                    </a>
+                @endif
 
                 @auth
                     <!-- If the user is an admin -->
@@ -308,7 +315,11 @@
                                 {{-- <button class="button">Add To Card</button> --}}
                                 <div class="featured__actions">
                                     {{-- <button><i class="ri-search-line"></i></button> --}}
-                                    <button><i class="ri-heart-3-line"></i></button>
+                                    {{-- <button><i class="ri-heart-3-line"></i></button> --}}
+                                    <button class="wishlist-btn" data-book-id="{{ $book->id }}"
+                                        data-book-title="{{ $book->title }}">
+                                        <i class="ri-heart-3-line"></i>
+                                    </button>
                                     <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
                                     {{-- <button><i class="ri-eye-line"></i></button> --}}
                                 </div>
@@ -366,14 +377,18 @@
                                     <img src=" {{ asset('storage/photos/' . $book->photo) }}" alt="image"
                                         class="featured__img">
                                 @endif
-                                <h2 class="featured__title">{{ $book->title }}</h2>                                
+                                <h2 class="featured__title">{{ $book->title }}</h2>
                                 <div class="featured__prices">
                                     <span class="featured__discount">$11.99</span>
                                     {{-- <span class="featured__price">$19.99</span> --}}
-                                </div>                               
-                                <div class="featured__actions">                                   
-                                    <button><i class="ri-heart-3-line"></i></button>
-                                    <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>                                   
+                                </div>
+                                <div class="featured__actions">
+                                    {{-- <button><i class="ri-heart-3-line"></i></button> --}}
+                                    <button class="wishlist-btn" data-book-id="{{ $book->id }}"
+                                        data-book-title="{{ $book->title }}">
+                                        <i class="ri-heart-3-line"></i>
+                                    </button>
+                                    <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
                                 </div>
                             </article>
                         @endforeach
@@ -532,6 +547,19 @@
                 </div>
             </div>
         </section>
+        <div class="modal-overlay" id="wishlistModalOverlay"></div>
+        <div class="wishlist-modal" id="wishlistModal">
+            <div class="modal-content">
+                <div class="modal-icon-container" id="modalIcon">
+                </div>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-message" id="modalMessage"></p>
+                <div class="modal-actions">
+                    <a href="{{ route('wishlist.index') }}" class="button">View Wishlist</a>
+                    <button class="button close-modal" id="closeModal">Close</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!--==================== FOOTER ====================-->
@@ -645,6 +673,8 @@
     <!--=============== MAIN JS ===============-->
     {{-- <script src="assets/js/main.js"></script> --}}
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script src="{{ asset('js/wishlist.js') }}"></script>
 
 </body>
 

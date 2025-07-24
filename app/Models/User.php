@@ -13,8 +13,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     use SoftDeletes;
-    
-    
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -70,5 +70,12 @@ class User extends Authenticatable
     {
         return $this->role_id === 2; // Assuming 2 is the regular user role_id
     }
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+    public function wishlistBooks()
+{
+    return $this->belongsToMany(Book::class, 'wishlists');
 }
-
+}

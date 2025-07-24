@@ -22,13 +22,13 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dropdownlist.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/wishlist.css') }}">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <!-- ==== To Overwrite Style ==== -->
     @stack('styles')
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Responsive book website - Bedimcode</title>
 </head>
 
@@ -41,38 +41,7 @@
             </a>
             <div class="nav__menu">
                 <ul class="nav__list">
-                    <!-- Deleted some nav items -->
-                    {{-- <li class="nav__item dropdown">
-                        <button class="nav__link dropdown-toggle">
-                            <i class="ri-folders-line"></i>
-                            <span>Categories</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @foreach ($categories as $category)
-                                <li>
-                                    <a href="{{ route('books.byCategory', $category->id) }}" class="dropdown-item">
-                                        {{ $category->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
 
-                    <li class="nav__item dropdown">
-                        <button class="nav__link dropdown-toggle">
-                            <i class="ri-user-line"></i>
-                            <span>Authors</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @foreach ($authors as $author)
-                                <li>
-                                    <a href="{{ route('books.byAuthor', $author->id) }}" class="dropdown-item">
-                                        {{ $author->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li> --}}
 
                 </ul>
             </div>
@@ -80,6 +49,12 @@
             <div class="nav__actions">
                 <!-- Search button -->
                 <i class="ri-search-line search-button" id="search-button"></i>
+                @if (Auth::check())
+                    <a href="{{ route('wishlist.index') }}" class="wishlist-icon">
+                        <i class="ri-heart-3-line"></i>
+                        <span id="wishlist-count" class="wishlist-badge">0</span>
+                    </a>
+                @endif
 
                 @auth
                     <!-- If the user is an admin -->
@@ -176,8 +151,8 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="register-email" class="register__label">Email</label>
-                    <input type="email" placeholder="Write your email" id="register-email"
+                    <label class="register__label">Email</label>
+                    <input type="email" placeholder="Write your email" 
                         class="register__input @error('email') is-invalid @enderror" name="email" id="email"
                         value="{{ old('email') }}">
                     @error('email')
@@ -187,7 +162,7 @@
                 <div>
                     <label for="register-pass"
                         class="register__label @error('password') is-invalid @enderror">Password</label>
-                    <input type="password" placeholder="Enter your password" id="register-pass"
+                    <input type="password" placeholder="Enter your password"
                         class="register__input" id="password" name="password">
                     @error('password')
                         <span class="text-danger">{{ $message }}</span>
@@ -334,9 +309,9 @@
     {{-- <script src="assets/js/main.js"></script> --}}
     <script src="{{ asset('js/main.js') }}"></script>
 
-    <!--=============== DropDownList JS ===============-->
-    
-    <script src="{{ asset('js/dropdownlist.js') }}" defer></script>
+    <!--=============== WishList JS ===============-->
+
+    <script src="{{ asset('js/wishlist.js') }}"></script>
 </body>
 
 </html>
