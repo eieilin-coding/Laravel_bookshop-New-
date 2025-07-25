@@ -194,7 +194,8 @@ body.dark-theme {
   justify-content: space-between;
   align-items: center;
 
-  /* padding: 4rem; */
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .logo {
@@ -909,6 +910,7 @@ body.dark-theme {
     padding-inline: 3rem;
   }
 
+  
   .discount__img1,
   .discount__img2 {
     width: 140px;
@@ -925,12 +927,18 @@ body.dark-theme {
     grid-template-columns: 1fr;
     row-gap: 2rem;
   }
-  
-
+ 
 }
+@media screen and (max-width: 450px) {
+  #nav__brand {
+    display: none !important;
+  }
+}
+
 
 /* For medium devices */
 @media screen and (min-width: 450px){
+
   .featured__card{
       width: 290px;
     }
@@ -940,13 +948,16 @@ body.dark-theme {
   .testimonial__card{
     width: 320px;
   }
+  
 
 }
+
 @media screen and (min-width: 576px){
   .search__form{
     width: 500px;
     margin-inline: auto;
-  }
+  }  
+
   .login__form,
   .register__form{
     width: 400px;
@@ -960,7 +971,7 @@ body.dark-theme {
     right: 0;
     margin-inline: auto;
   }
-
+   
   .register__close{
     width: max-content;
     top: 3rem;
@@ -1019,6 +1030,10 @@ body.dark-theme {
   .section{
     padding-block: 7rem 2rem;
   }
+   #nav__brand {
+    display: block !important;
+  }
+
   .nav{
     height: calc(var(--header-height) + 2rem);
     column-gap: 4rem;

@@ -92,6 +92,9 @@ Route::controller(BookController::class)->group(function () {
 //  Route::get('/layouts/userview', function () {
 //     return view('layouts.userview');
 // });
+ Route::get('/auth/login1', function () {
+    return view('auth.login1');
+});
 
 
 Route::get('/layouts/userview', [BookController::class, 'userview'])->name('layouts.userview');

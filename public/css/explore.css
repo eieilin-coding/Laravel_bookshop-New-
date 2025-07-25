@@ -5,17 +5,7 @@
     margin-bottom: 30px;
 }
 
-/* .featured__card {
-            position: relative;
-            text-align: center;
-            width: 250px;
-            height: 400px;
-            background-color: var(--container-color);
-            padding: 2rem;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            transition: border .4s, background-color .4s;
-        } */
+
 .featured__card {
     position: relative;
     text-align: center;
@@ -35,12 +25,7 @@
     right: 1.3rem;
 }
 
-/* .featured__img {
-            width: 100%;
-            height: auto;
-            max-height: 200px;
-            object-fit: contain;
-        } */
+
 
 .pagination {
     display: flex;
@@ -48,11 +33,6 @@
     margin-top: 30px;
 }
 
-/* .pagination ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-        } */
 .pagination ul {
     display: flex;
     list-style: none;

@@ -20,10 +20,10 @@ class BookController extends Controller
     {
         
         // Discount books: download_count = 0
-        $discountBooks = Book::where('download_count', 0)->take(5)->get();       
+        $discountBooks = Book::where('disc_price','<', 6500)->take(5)->get();       
 
         // Featured books: download_count > 7
-        $featuredBooks = Book::where('download_count', '>', 7)->take(5)->get();       
+        $featuredBooks = Book::where('is_featured', 1)->take(5)->get();       
 
         // New books: created within the last 2 weeks
         $newBooks = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->take(5)->get();       
@@ -36,14 +36,14 @@ class BookController extends Controller
     }
 
     public function discount(){
-         $discount = Book::where('download_count', 0)->paginate(8);         
+         $discount = Book::where('disc_price','<', 6500)->paginate(8);         
         return view('books.discountBooks', [
             'discount' => $discount,
         ]);
     }
 
     public function featured(){
-         $featured = Book::where('download_count', '>', 7)->paginate(8);         
+         $featured = Book::where('is_featured', 1)->paginate(8);         
         return view('books.featuredBooks', [
             'featured' => $featured,
         ]);

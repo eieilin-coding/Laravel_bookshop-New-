@@ -25,6 +25,11 @@
                 <p>{{ $book->description }}</p>
             </div>
 
+            <div class="prices" >
+                <p class="featured__price"><strong>Normal Price:</strong>MMK {{ $book->normal_price }}</p>
+                <p ><strong>Discount Price:</strong>MMK {{ $book->disc_price }}</p>                
+            </div>
+
             <div class="book-actions">
                 @auth
                     {{-- Show download button for logged-in users --}}

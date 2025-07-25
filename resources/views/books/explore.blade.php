@@ -4,10 +4,10 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/explore.css') }}">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.min.css">
-       
-    
+
+
     <section class="featured section" id="featured">
         <div class="featured__container container">
             <div class="featured__grid">
@@ -18,11 +18,13 @@
                         @endif
                         <h2 class="featured__title">{{ $book->title }}</h2>
                         <div class="featured__prices">
-                            <span class="featured__discount">$11.99</span>
+                            <span class="featured__discount">MMK{{ $book->disc_price }}</span>
+                            <span class="featured__price">MMK{{ $book->normal_price }}</span>
                         </div>
                         <div class="featured__actions">
-                            <button class="wishlist-btn" data-book-id="{{ $book->id }}" data-book-title="{{ $book->title }}">
-                                <i class="ri-heart-3-line"></i>
+                            <button class="wishlist-btn" data-book-id="{{ $book->id }}"
+                                data-book-title="{{ $book->title }}">
+                                <i class="ri-heart-3-line "></i>
                             </button>
                             <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
                         </div>
@@ -40,7 +42,7 @@
     <div class="wishlist-modal" id="wishlistModal">
         <div class="modal-content">
             <div class="modal-icon-container" id="modalIcon">
-                </div>
+            </div>
             <h3 class="modal-title" id="modalTitle"></h3>
             <p class="modal-message" id="modalMessage"></p>
             <div class="modal-actions">
@@ -48,6 +50,5 @@
                 <button class="button close-modal" id="closeModal">Close</button>
             </div>
         </div>
-    </div>     
-    
+    </div>
 @endsection

@@ -13,13 +13,12 @@
                         @endif
                         <h2 class="featured__title">{{ $book->title }}</h2>
                         <div class="featured__prices">
-                            <span class="featured__discount">$11.99</span>
-                            <span class="featured__price">$19.99</span>
+                            <span class="featured__discount">MMK{{ $book->disc_price }}</span>
+                            <span class="featured__price">MMK{{ $book->normal_price }}</span>
                         </div>
                         {{-- <button class="button">Add To Card</button> --}}
                         <div class="featured__actions">
-                            {{-- <button><i class="ri-search-line"></i></button> --}}
-                            {{-- <button><i class="ri-heart-3-line"></i></button> --}}
+                            
                             <button class="wishlist-btn" data-book-id="{{ $book->id }}" data-book-title="{{ $book->title }}">
                                 <i class="ri-heart-3-line"></i>
                             </button>

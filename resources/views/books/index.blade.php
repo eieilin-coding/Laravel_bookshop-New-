@@ -32,9 +32,8 @@
     <!--==================== HEADER ====================-->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#" class="nav__logo">
-                {{-- <img src="{{ asset('storage/photos/logo1.png') }}" alt="image" class="logo"> --}}
-                <i class="ri-book-3-line"></i>E-Book
+            <a href="{{ route('books.index') }}" class="nav__logo">                
+                <i class="ri-book-3-line"></i><span id="nav__brand">E-Book</span>
             </a>
             <div class="nav__menu">
                 <ul class="nav__list">
@@ -311,29 +310,27 @@
                                 <h2 class="featured__title">{{ $book->title }}</h2>
                                 {{-- <h2 class="featured__title">Featured Book</h2> --}}
                                 <div class="featured__prices">
-                                    <span class="featured__discount">$11.99</span>
-                                    {{-- <span class="featured__price">$19.99</span> --}}
+                                    <span class="featured__discount">MMK{{ $book->disc_price }}</span>
+                                    <span class="featured__price">MMK{{ $book->normal_price }}</span>
                                 </div>
                                 {{-- <button class="button">Add To Card</button> --}}
                                 <div class="featured__actions">
-                                    {{-- <button><i class="ri-search-line"></i></button> --}}
-                                    {{-- <button><i class="ri-heart-3-line"></i></button> --}}
+                                    
                                     <button class="wishlist-btn" data-book-id="{{ $book->id }}"
                                         data-book-title="{{ $book->title }}">
                                         <i class="ri-heart-3-line"></i>
                                     </button>
-                                    <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>
-                                    {{-- <button><i class="ri-eye-line"></i></button> --}}
+                                    <a href="{{ url("/books/show/$book->id") }}"><i class="ri-eye-line"></i></a>                                   
                                 </div>
                             </article>
                         @endforeach
                     </div>
-                    <div class="swiper-button-prev">
+                    {{-- <div class="swiper-button-prev">
                         <i class="ri-arrow-left-s-line"></i>
                     </div>
                     <div class="swiper-button-next">
                         <i class="ri-arrow-right-s-line"></i>
-                    </div>
+                    </div> --}}
                 </div>
                 <a href="{{ route('books.featuredBooks') }}" class="see__more">See All Featured Books >>> </a>
             </div>
@@ -368,7 +365,7 @@
 
         <section class="featured section" id="discount">
             <h2 class="section__title">
-                Highlight Books
+                Discount Books
             </h2>
             <div class="featured__container container">
                 <div class="featured__swiper swiper">
@@ -381,8 +378,8 @@
                                 @endif
                                 <h2 class="featured__title">{{ $book->title }}</h2>
                                 <div class="featured__prices">
-                                    <span class="featured__discount">$11.99</span>
-                                    {{-- <span class="featured__price">$19.99</span> --}}
+                                    <span class="featured__discount">MMK{{ $book->disc_price }}</span>
+                                    <span class="featured__price">MMK{{ $book->normal_price }}</span>
                                 </div>
                                 <div class="featured__actions">
                                     {{-- <button><i class="ri-heart-3-line"></i></button> --}}
@@ -395,12 +392,12 @@
                             </article>
                         @endforeach
                     </div>
-                    <div class="swiper-button-prev">
+                    {{-- <div class="swiper-button-prev">
                         <i class="ri-arrow-left-s-line"></i>
                     </div>
                     <div class="swiper-button-next">
                         <i class="ri-arrow-right-s-line"></i>
-                    </div>
+                    </div> --}}
                 </div>
                 <a href="{{ route('books.discountBooks') }}" class="see__more">See All Discount Books >>> </a>
             </div>
@@ -421,11 +418,10 @@
                                         class="new__img">
                                 @endif
                                 <div>
-                                    <h2 class="new__title">{{ $book->title }}</h2>
-                                    {{-- <h2 class="new__title">New Book</h2> --}}
+                                    <h2 class="new__title">{{ $book->title }}</h2>                                    
                                     <div class="new__prices">
-                                        <span class="new__discount">$12.99</span>
-                                        {{-- <span class="new__price">$14.99</span> --}}
+                                        {{-- <span class="new__discount">MMK{{ $book->disc_price }}</span> --}}
+                                        <span class="new__discount">MMK{{ $book->normal_price }}</span>
                                     </div>
                                     <div class="new__stars">
                                         <i class="ri-star-fill"></i>
