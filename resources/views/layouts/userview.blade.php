@@ -12,6 +12,8 @@
 
     <!--=============== REMIXICONS ===============-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.min.css">
+
 
     <!--=============== SWIPER CSS ===============-->
     {{-- <link rel="stylesheet" href="assets/css/swiper-bundle.min.css"> --}}

@@ -5,9 +5,6 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/explore.css') }}">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.min.css">
-
-
     <section class="featured section" id="featured">
         <div class="featured__container container">
             <div class="featured__grid">

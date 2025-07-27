@@ -41,7 +41,7 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label for="title" class="form-label fw-semibold">Book Title</label>
-                    <input type="text" name="title" id="title"  value="{{ old('title') }}"
+                    <input type="text" name="title" id="title" value="{{ old('title') }}"
                         class="form-control @error('title') is-invalid @enderror" placeholder="Enter book title">
                     @error('title')
                         <span class="text-danger">{{ $message }}</span>
@@ -50,7 +50,7 @@
 
                 <div class="col-md-6">
                     <label for="publisher" class="form-label fw-semibold">Publisher</label>
-                    <input type="text" name="publisher" id="publisher"  value="{{ old('publisher') }}"
+                    <input type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"
                         class="form-control @error('publisher') is-invalid @enderror" placeholder="Enter publisher">
                     @error('publisher')
                         <span class="text-danger">{{ $message }}</span>
@@ -61,7 +61,7 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label for="published_date" class="form-label fw-semibold">Published Date</label>
-                    <input type="date" name="published_date" id="published_date"  value="{{ old('published_date') }}"
+                    <input type="date" name="published_date" id="published_date" value="{{ old('published_date') }}"
                         class="form-control @error('published_date') is-invalid @enderror">
                     @error('published_date')
                         <span class="text-danger">{{ $message }}</span>
@@ -70,19 +70,24 @@
 
                 <div class="col-md-6">
                     <label for="book_photo" class="form-label fw-semibold">Book Cover (Photo)</label>
-                    <input type="file" id="photo" name="photo"  value="{{ old('photo') }}"
+                    <input type="file" id="photo" name="photo" value="{{ old('photo') }}"
                         class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                     @error('photo')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                     <small class="text-muted">Max: 5MB (JPG, PNG, GIF)</small>
+                    @if ($errors->has('photo'))
+                        <script>
+                            alert("{{ $errors->first('photo') }}");
+                        </script>
+                    @endif
                 </div>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label fw-semibold">Description</label>
                 <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                    rows="3"  placeholder="Short book description">{{ old('description') }}</textarea>
+                    rows="3" placeholder="Short book description">{{ old('description') }}</textarea>
                 @error('description')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -91,11 +96,16 @@
             <div class="mb-4">
                 <label for="book_pdf" class="form-label fw-semibold">Upload Book PDF</label>
                 <input type="file" id="pdf" name="file" class="form-control @error('file') is-invalid @enderror"
-                     value="{{ old('file') }}" accept="application/pdf">
+                    value="{{ old('file') }}" accept="application/pdf">
                 @error('file')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <small class="text-muted">Max: 20MB (PDF only)</small>
+                <small class="text-muted">Max: 10MB (PDF only)</small>
+                @if ($errors->has('file'))
+                    <script>
+                        alert("{{ $errors->first('file') }}");
+                    </script>
+                @endif
             </div>
 
             <div class="d-flex justify-content-center gap-3">

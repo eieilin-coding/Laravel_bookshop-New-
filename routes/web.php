@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::controller(BookController::class)->group(function () {
         Route::get('/books/adminIndex', 'adminIndex')->name('books.adminIndex');
+        Route::get('/books/showAdmin/{id}', 'showAdmin')->name('books.showAdmin');
         // Route::get('/books/adminInd', 'adminInd')->name('books.adminInd');
 
         Route::get('/books/create', 'create')->name('books.create');
@@ -82,6 +83,7 @@ Route::controller(BookController::class)->group(function () {
 Route::controller(BookController::class)->group(function () {
     Route::get('/books/{id}/download', 'download')->name('books.download');
  });
+
 
 // Route::group(['middleware' => ['auth', 'role:user|admin']], function () {
 //     Route::controller(BookController::class)->group(function () {

@@ -76,7 +76,8 @@ class LoginRegisterController extends Controller implements HasMiddleware
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->route('books.index');
+        // return redirect()->route('books.index');
+        return redirect()->intended();
         }
 
         return back()->withErrors([

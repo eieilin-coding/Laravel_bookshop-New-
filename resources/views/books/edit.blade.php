@@ -28,7 +28,7 @@
                         class="form-select form-control @error('author_id') is-invalid @enderror">
                         <option value="">-- Select Author --</option>
                         @foreach ($authors as $author)
-                            <option value="{{ $author->id }}" @selected($book->author_id == $author->id) 
+                            <option value="{{ $author->id }}" @selected($book->author_id == $author->id)
                                 {{ old('author_id', $book->author_id ?? '') == $author->id ? 'selected' : '' }}>
                                 {{ $author->name }}
                             </option>
@@ -53,7 +53,8 @@
                 <div class="col-md-6">
                     <label for="publisher" class="form-label fw-semibold">Publisher</label>
                     <input type="text" name="publisher" id="publisher"
-                        class="form-control  @error('publisher') is-invalid @enderror" value="{{ old('publisher', $book->publisher) }}">
+                        class="form-control  @error('publisher') is-invalid @enderror"
+                        value="{{ old('publisher', $book->publisher) }}">
                     @error('publisher')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -79,6 +80,11 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                     <small class="text-muted">Max: 5MB (JPG, PNG, GIF)</small>
+                    @if ($errors->has('photo'))
+                        <script>
+                            alert("{{ $errors->first('photo') }}");
+                        </script>
+                    @endif
 
                     @if ($book->photo)
                         <div class="mt-2">
@@ -107,7 +113,12 @@
                 @error('file')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <small class="text-muted">Max: 20MB (PDF only)</small>
+                <small class="text-muted">Max: 10MB (PDF only)</small>
+                @if ($errors->has('file'))
+                    <script>
+                        alert("{{ $errors->first('file') }}");
+                    </script>
+                @endif
 
                 @if ($book->file)
                     <div class="mt-2">

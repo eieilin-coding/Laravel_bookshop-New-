@@ -25,24 +25,30 @@
                 <p>{{ $book->description }}</p>
             </div>
 
-            <div class="prices" >
-                <p class="featured__price"><strong>Normal Price:</strong>MMK {{ $book->normal_price }}</p>
-                <p ><strong>Discount Price:</strong>MMK {{ $book->disc_price }}</p>                
+            <div class="prices">
+                <p><strong>Normal Price:</strong><span class="featured__price"> MMK{{ $book->normal_price }}</span> </p>
+                <p><strong>Discount Price:</strong>MMK {{ $book->disc_price }}</p>
             </div>
 
             <div class="book-actions">
-                @auth
-                    {{-- Show download button for logged-in users --}}
-                    <a href="{{ route('books.download', $book->id) }}" class="btn btn-download"
+                {{-- @auth --}}
+                {{-- Show download button for logged-in users --}}
+                {{-- <a href="{{ route('books.download', $book->id) }}" class="btn btn-download"
                         download="{{ str_replace(' ', '_', $book->title) }}.pdf">
                         <i class="fas fa-download"></i> Download PDF
-                    </a>
-                @else
-                    {{-- Show info message for guests --}}
-                    <div class="btn btn-info">
+                    </a> --}}
+                {{-- @else --}}
+                {{-- Show info message for guests --}}
+                {{-- <div class="btn btn-info">
                         <i class="fas fa-info-circle"></i> Only logged-in users can download.
                     </div>
-                @endauth
+                @endauth --}}
+
+                <a href="{{ route('books.download', $book->id) }}" class="btn btn-download download-btn"
+                    data-auth="{{ auth()->check() ? '1' : '0' }}"
+                    data-download-url="{{ route('books.download', $book->id) }}">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
 
                 {{-- Back button (always visible) --}}
                 <a href="{{ route('books.index') }}" class="btn btn-back">
@@ -55,6 +61,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+    document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const isAuth = this.dataset.auth === '1';
+            const downloadUrl = this.dataset.downloadUrl;
+
+            if (!isAuth) {
+                e.preventDefault();
+                window.location.href = "{{ route('login') }}";
+            } else {
+                window.location.href = downloadUrl;
+            }
+        });
+    });
+</script>
     @push('styles')
         <style>
             body .footer {

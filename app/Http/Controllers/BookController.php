@@ -9,50 +9,52 @@ use App\Models\Category;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BookController extends Controller
 {
-
-
     public function index()
     {
-        
+
         // Discount books: download_count = 0
-        $discountBooks = Book::where('disc_price','<', 6500)->take(5)->get();       
+        $discountBooks = Book::where('disc_price', '<', 6500)->take(5)->get();
 
         // Featured books: download_count > 7
-        $featuredBooks = Book::where('is_featured', 1)->take(5)->get();       
+        $featuredBooks = Book::where('is_featured', 1)->take(5)->get();
 
         // New books: created within the last 2 weeks
-        $newBooks = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->take(5)->get();       
+        $newBooks = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->take(5)->get();
 
-        return view('books.index', [            
+        return view('books.index', [
             'discountBooks' => $discountBooks,
             'featuredBooks' => $featuredBooks,
-            'newBooks' => $newBooks,                   
+            'newBooks' => $newBooks,
         ]);
     }
 
-    public function discount(){
-         $discount = Book::where('disc_price','<', 6500)->paginate(8);         
+    public function discount()
+    {
+        $discount = Book::where('disc_price', '<', 6500)->paginate(8);
         return view('books.discountBooks', [
             'discount' => $discount,
         ]);
     }
 
-    public function featured(){
-         $featured = Book::where('is_featured', 1)->paginate(8);         
+    public function featured()
+    {
+        $featured = Book::where('is_featured', 1)->paginate(8);
         return view('books.featuredBooks', [
             'featured' => $featured,
         ]);
     }
 
-    public function new(){
-       $new = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->paginate(8);      
+    public function new()
+    {
+        $new = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->paginate(8);
         return view('books.newBooks', [
-           'new' => $new,
+            'new' => $new,
         ]);
     }
 
@@ -63,23 +65,6 @@ class BookController extends Controller
 
         return view('layouts.userview', compact('categories', 'authors'));
     }
-
-    // public function byCategory(Category $category)
-    // {
-    //     $categories = Category::all();
-    //     $authors = Author::all();
-    //     $books = $category->books()->paginate(8);
-    //     return view('books.byCategory', compact('books', 'category', 'categories', 'authors'));
-    // }
-
-    // public function byAuthor(Author $author)
-    // {
-    //     $authors = Author::all();
-    //     $categories = Category::all();
-
-    //     $books = $author->books()->paginate(8);
-    //     return view('books.byAuthor', compact('books', 'author', 'authors', 'categories'));
-    // }
 
     public function explore(Request $request)
     {
@@ -124,7 +109,7 @@ class BookController extends Controller
                     <i class="fa-solid fa-pen-to-square"></i></a>';
                     $btn .= $edit;
 
-                    $show = '<a href="' . route('books.show', [$row->id]) . '" class="show btn btn-info btn-md me-2">
+                    $show = '<a href="' . route('books.showAdmin', [$row->id]) . '" class="show btn btn-info btn-md me-2 text-white">
                     <i class="fa-solid fa-eye"></i></a>';
                     $btn .= $show;
 
@@ -152,6 +137,14 @@ class BookController extends Controller
         ]);
     }
 
+    public function showAdmin($id)
+    {
+        $data = Book::find($id);
+
+        return view('books.showAdmin', [
+            'book' => $data
+        ]);
+    }
     public function create()
     {
         $categories = Category::all();
@@ -180,6 +173,12 @@ class BookController extends Controller
             'description' => 'required',
             'file' => 'required|mimes:pdf|max:10240',
             'photo' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+
+            //             $request->validate([
+            //     'file' => 'required|mimes:pdf|max:20480', // 20MB
+            //     'photo' => 'required|image|mimes:jpg,png,jpeg|max:2048', // 2MB
+            // ]);
+
         ]);
 
         if ($validator->fails()) {
@@ -280,4 +279,5 @@ class BookController extends Controller
         // Return file download response
         return response()->download($filePath, basename($filePath));
     }
+
 }
