@@ -18,19 +18,17 @@ class CheckUserRole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!Auth::check()) {
-            // User is not logged in, redirect to login page
+           
             return redirect()->route('login');
         }
 
-        $user = Auth::user();
-
-        // Assuming role_id 1 is 'admin' and 2 is 'regular_user'
+        $user = Auth::user();        
         $requiredRoleId = null;
         foreach ($roles as $role) {
             if ($role === 'admin') {
-                $requiredRoleId = 1; // Assuming 'admin' maps to role_id 1
-            } elseif ($role === 'user') { // Or any other role you define
-                $requiredRoleId = 2; // Assuming 'user' maps to role_id 2
+                $requiredRoleId = 1; 
+            } elseif ($role === 'user') { 
+                $requiredRoleId = 2; 
             }
             // Add more conditions for other roles if needed
         }
@@ -39,9 +37,7 @@ class CheckUserRole
             return $next($request);
         }
 
-        // If the user does not have the required role, redirect or abort
         return redirect('/')->with('error', 'You do not have permission to access this page.');
-        // Or you can abort with a 403 Forbidden error:
-        // abort(403, 'Unauthorized action.');
+        
     }
 }

@@ -7,9 +7,8 @@
     <thead>
       <tr>
         <th>Sr No</th>
-       
-        <th>User Name</th>
-        
+        <th> User Name </th>       
+        <th>User Email</th>        
         <th width="100px">Action</th>
       </tr>
     </thead>
@@ -35,6 +34,7 @@
 
               {data: "DT_RowIndex", name: 'DT_RowIndex',searchable: false, orderable: false},
               {data: 'name' , name: 'name'},
+              {data: 'email' , name: 'email'},
              {data: 'action', name: 'action'},
          ],
           responsive: true,

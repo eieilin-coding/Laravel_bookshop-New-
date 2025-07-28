@@ -10,7 +10,7 @@ class Subscribe extends Model
     /** @use HasFactory<\Database\Factories\SubscribeFactory> */
     use HasFactory;
 
-     protected $fillable = ['email', 'is_verified', 'verification_token', 'verified_at'];
+     protected $fillable = ['email', 'is_verified', 'verification_token', 'verified_at','is_active'];
 
     public static function boot()
     {

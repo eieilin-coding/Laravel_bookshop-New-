@@ -46,14 +46,12 @@ class UserController extends Controller
         return view('users.index');
     }
 
-    
-    public function show($id)
-    {
-        $data = User::find($id);
+    public function delete($id)
 
-        return view('users.show', [
-            'user' => $data
-        ]);
+    {
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('users.index');
     }
 
 }

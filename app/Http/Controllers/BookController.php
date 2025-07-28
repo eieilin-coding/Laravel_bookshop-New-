@@ -6,25 +6,24 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Wishlist;
+use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BookController extends Controller
 {
     public function index()
-    {
-
-        // Discount books: download_count = 0
+    {       
         $discountBooks = Book::where('disc_price', '<', 6500)->take(5)->get();
-
-        // Featured books: download_count > 7
+        
         $featuredBooks = Book::where('is_featured', 1)->take(5)->get();
-
-        // New books: created within the last 2 weeks
+       
         $newBooks = Book::where('created_at', '>=', Carbon::now()->subWeeks(2))->take(5)->get();
 
         return view('books.index', [

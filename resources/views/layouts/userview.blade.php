@@ -76,7 +76,7 @@
                 @else
                     <!-- Login button -->
                     {{-- <i class="ri-login-circle-line login-button" id="login-button"></i> --}}
-                    <i class="ri-login-circle-line btnLogin-popup" id="login-button"></i>
+                    <a href="{{ route('login') }}" class="login-button"><i class="ri-login-circle-line"></i></a>
 
                     <!-- Register button -->
                     {{-- <i class="ri-user-line register-button" id="register-button"></i> --}}

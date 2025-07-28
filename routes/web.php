@@ -84,6 +84,14 @@ Route::controller(BookController::class)->group(function () {
     Route::get('/books/{id}/download', 'download')->name('books.download');
  });
 
+ Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');   
+    Route::post('/wishlist/add/{bookId}', [WishlistController::class, 'add'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+    Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+    Route::get('/wishlist/count', [WishlistController::class, 'getCount'])->name('wishlist.count');
+});
+
 
 // Route::group(['middleware' => ['auth', 'role:user|admin']], function () {
 //     Route::controller(BookController::class)->group(function () {
@@ -94,17 +102,17 @@ Route::controller(BookController::class)->group(function () {
 //  Route::get('/layouts/userview', function () {
 //     return view('layouts.userview');
 // });
+
+//Testing for login
+Route::get('/layouts/test', function() {
+    return view('layouts.test');
+});
  Route::get('/auth/login1', function () {
     return view('auth.login1');
 });
-
-
 Route::get('/layouts/userview', [BookController::class, 'userview'])->name('layouts.userview');
 
-
-Route::get('/books/byCategory/{id}', [BookController::class, 'byCategory'])->name('books.byCategory');
-Route::get('/books/byAuthor/{id}', [BookController::class, 'byAuthor'])->name('books.byAuthor');
-
+Route::post('/wishlist/check-status', [WishlistController::class, 'checkStatus'])->name('wishlist.check-status');
 
 // Subscription routes
 Route::post('/subscribe', [SubscriptionController::class, 'store'])->name('subscribe');
@@ -116,16 +124,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'can:admin'])->group(fun
     Route::post('/send-newsletter', [NewsletterController::class, 'send'])->name('admin.send-newsletter');
 });
 
-// routes/web.php
-Route::middleware(['auth'])->group(function () {
-    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');   
-    // Route::get('/wishlist/add/{bookId}', [WishlistController::class, 'add'])->name('wishlist.add');
-    Route::delete('/wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
-});
 
-Route::post('/wishlist/add/{bookId}', [WishlistController::class, 'add'])->name('wishlist.add')->middleware('auth');
 
-Route::middleware('auth')->group(function () {
-    Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
-    Route::get('/wishlist/count', [WishlistController::class, 'getCount'])->name('wishlist.count');
-});
+
+

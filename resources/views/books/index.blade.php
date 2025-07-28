@@ -101,11 +101,12 @@
                         </button>
                     </form>
                 @else
-                    <!-- Login button -->
+                <a href="{{ route('login') }}" class="login-button"><i class="ri-login-circle-line"></i></a>
+                    {{-- <!-- Login button -->
                     <i class="ri-login-circle-line login-button" id="login-button"></i>
 
                     <!-- Register button -->
-                    <i class="ri-user-line register-button" id="register-button"></i>
+                    <i class="ri-user-line register-button" id="register-button"></i> --}}
                 @endauth
 
                 <!-- Theme button -->
