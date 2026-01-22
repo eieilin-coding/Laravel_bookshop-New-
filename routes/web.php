@@ -21,11 +21,11 @@ Route::controller(LoginRegisterController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:Admin']], function () {
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:Admin']], function () {
     Route::controller(AuthorController::class)->group(function () {
         Route::get('/authors/index', 'index')->name('authors.index');
         Route::get('/authors/test', 'index')->name('authors.test');
@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     });
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:Admin']], function () {
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/categories/index', 'index')->name('categories.index');
         Route::post('/categories/store', 'store')->name('categories.store');
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     });
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:Admin']], function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/users/index', 'index')->name('users.index');
         Route::get('users/suspended/{id}', 'suspended')->name('users.suspended');
@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     });
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function () {
+Route::group(['middleware' => ['auth', 'role:Admin']], function () {
     Route::controller(BookController::class)->group(function () {
         Route::get('/books/adminIndex', 'adminIndex')->name('books.adminIndex');
         Route::get('/books/showAdmin/{id}', 'showAdmin')->name('books.showAdmin');

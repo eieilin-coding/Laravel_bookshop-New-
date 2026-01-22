@@ -39,6 +39,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $casts = [
+    'role_id' => 'integer',
+    ];
+
+
     /**
      * Get the attributes that should be cast.
      *
@@ -58,7 +63,7 @@ class User extends Authenticatable
     }
     public function isAdmin(): bool
     {
-        return $this->role_id === 1; // Assuming 1 is the admin role_id
+        return $this->role_id === 2; 
     }
 
     /**
@@ -68,7 +73,7 @@ class User extends Authenticatable
      */
     public function isUser(): bool
     {
-        return $this->role_id === 2; // Assuming 2 is the regular user role_id
+        return $this->role_id === 3; 
     }
     public function wishlists()
     {
