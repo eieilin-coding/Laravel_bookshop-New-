@@ -49,7 +49,7 @@
 
                  @auth
                     <!-- If the user is an admin -->
-                    @if (auth()->user()->role_id == 1)
+                    @if (auth()->user()->role_id == 2)
                         <a href="{{ route('admin.dashboard') }}" title="Admin Dashboard">
                             <i class="ri-dashboard-line"></i>
                         </a>

@@ -23,17 +23,8 @@ class CheckUserRole
         }
 
         $user = Auth::user();        
-        $requiredRoleId = null;
-        foreach ($roles as $role) {
-            if ($role === 'admin') {
-                $requiredRoleId = 1; 
-            } elseif ($role === 'user') { 
-                $requiredRoleId = 2; 
-            }
-            // Add more conditions for other roles if needed
-        }
 
-        if ($requiredRoleId !== null && $user->role_id === $requiredRoleId) {
+        if ($user->role_id !== null && (int) $user->role_id === 2 || $user->role_id === 1 || $user->role_id === 3 ) {
             return $next($request);
         }
 

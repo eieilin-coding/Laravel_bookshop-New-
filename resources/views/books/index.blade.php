@@ -87,7 +87,7 @@
 
                 @auth
                     <!-- If the user is an admin -->
-                    @if (auth()->user()->role_id == 1)
+                    @if (auth()->user()->role_id == 2)
                         <a href="{{ route('admin.dashboard') }}" title="Admin Dashboard">
                             <i class="ri-dashboard-line"></i>
                         </a>
@@ -246,22 +246,22 @@
                                 {{-- <img src="{{ asset('storage/photos/' . $book->photo) }}" class=" book-card-img"> --}}
                                 {{-- <img src="{{ asset('storage/photos/home-book-1.png') }}" alt="image"
                                     class="home__img"> --}}
-                                <img src="{{ asset('storage/photos/book-3.png') }}" alt="image"
+                                <img src="{{ asset('storage/photos/book-2.png') }}" alt="image"
                                     class="home__img">
                             </article>
 
                             <article class="home__article swiper-slide">
-                                <img src="{{ asset('storage/photos/book-5.png') }}" alt="image"
+                                <img src="{{ asset('storage/photos/book-2.png') }}" alt="image"
                                     class="home__img">
                             </article>
 
                             <article class="home__article swiper-slide">
-                                <img src="{{ asset('storage/photos/book-9.png') }}" alt="image"
+                                <img src="{{ asset('storage/photos/book-2.png') }}" alt="image"
                                     class="home__img">
                             </article>
 
                             <article class="home__article swiper-slide">
-                                <img src="{{ asset('storage/photos/home-book-4.png') }}" alt="image"
+                                <img src="{{ asset('storage/photos/book-2.png') }}" alt="image"
                                     class="home__img">
                             </article>
                         </div>

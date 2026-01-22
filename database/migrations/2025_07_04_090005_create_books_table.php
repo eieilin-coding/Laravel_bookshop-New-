@@ -21,8 +21,8 @@ return new class extends Migration
             $table->text('description');
             $table->string('photo');
             $table->string('file');
-            $table->integer('temp_delete');
-            $table->integer('download_count');
+            $table->integer('temp_delete')->default(0);
+            $table->integer('download_count')->default(0);
             $table->timestamps();
         });
     }

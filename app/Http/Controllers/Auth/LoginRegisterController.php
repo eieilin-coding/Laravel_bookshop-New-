@@ -40,7 +40,7 @@ class LoginRegisterController extends Controller implements HasMiddleware
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'role_id' => 2,
+            'role_id' => 3,
         ]);
 
         Auth::login($user);
@@ -72,7 +72,7 @@ class LoginRegisterController extends Controller implements HasMiddleware
             $request->session()->regenerate();           
             $user = Auth::user();
 
-        if ($user->role_id == 1) {        
+        if ($user->role_id == 1 || $user->role_id == 2) {        
             return redirect()->route('admin.dashboard');
         }
 
